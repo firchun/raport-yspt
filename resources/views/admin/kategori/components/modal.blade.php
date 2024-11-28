@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="userModalLabel">User Form</h5>
+                <h5 class="modal-title" id="userModalLabel">Rubah Kategori</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     ×
                 </button>
@@ -13,18 +13,9 @@
                 <form id="userForm">
                     <input type="hidden" id="formCustomerId" name="id">
                     <div class="mb-3">
-                        <label for="formCustomerName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="formCustomerName" name="name" required>
+                        <label for="formCustomerName" class="form-label">Kategori</label>
+                        <input type="text" class="form-control" id="formCustomerKategori" name="kategori" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="formCustomerPhone" class="form-label">Phone</label>
-                        <input type="number" class="form-control" id="formCustomerPhone" name="phone" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerAddress" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="formCustomerAddress" name="address" required>
-                    </div>
-
                 </form>
             </div>
             <div class="modal-footer">
@@ -38,7 +29,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="userModalLabel">User Form</h5>
+                <h5 class="modal-title" id="userModalLabel">Tambah Kategori</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     ×
                 </button>
@@ -47,16 +38,8 @@
                 <!-- Form for Create and Edit -->
                 <form id="createUserForm">
                     <div class="mb-3">
-                        <label for="formCustomerName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="formCustomerName" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerPhone" class="form-label">Phone</label>
-                        <input type="number" class="form-control" id="formCustomerPhone" name="phone" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerAddress" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="formCustomerAddress" name="address" required>
+                        <label for="formCustomerName" class="form-label">Kategori</label>
+                        <input type="text" class="form-control" id="formCustomerKategori" name="kategori" required>
                     </div>
 
                 </form>

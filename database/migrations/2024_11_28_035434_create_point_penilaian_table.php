@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['Admin', 'Owner', 'User'])->default('User')->after('email');
+        Schema::create('point_penilaian', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_kategori')->constrained('kategori_penilaian')->onDelete('cascade');
+            $table->string('point');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('point_penilaian');
     }
 };

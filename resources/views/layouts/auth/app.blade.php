@@ -54,11 +54,11 @@
             </div>
             <div class="login-menu">
                 <ul>
-                    @if ($title == 'login')
+                    {{-- @if ($title == 'login')
                         <li><a href="{{ route('register') }}">Register</a></li>
                     @elseif($title == 'register')
                         <li><a href="{{ route('login') }}">Login</a></li>
-                    @endif
+                    @endif --}}
                 </ul>
             </div>
         </div>

@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['Admin', 'Owner', 'User'])->default('User')->after('email');
+        Schema::table('penilaian_santri', function (Blueprint $table) {
+            $table->foreignId('id_santri')->after('id_tahun_ajaran')->constrained('santri')->onDelete('cascade');
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('penilaian_santri', function (Blueprint $table) {
             //
         });
     }

@@ -11,7 +11,8 @@
         <div class="col-md-6 col-lg-5">
             <div class="login-box bg-white box-shadow border-radius-10">
                 <div class="login-title">
-                    <h2 class="text-center text-primary">Login To {{ env('APP_NAME') }}</h2>
+                    <h2 class="text-center text-primary">{{ env('APP_NAME') ?? 'raport yayasan santri perbatasan timur' }}
+                    </h2>
                 </div>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
@@ -81,14 +82,14 @@
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">Sign
                                     In</button>
                             </div>
-                            <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
+                            {{-- <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
                                 OR
                             </div>
                             <div class="input-group mb-0">
                                 <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('register') }}">Register
                                     To Create
                                     Account</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </form>

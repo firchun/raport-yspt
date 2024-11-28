@@ -104,14 +104,38 @@
             <ul id="accordion-menu">
                 <li>
                     <a href="{{ route('home') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('home') ? 'active' : '' }}">
+                        class="dropdown-toggle no-arrow {{ request()->is('home') || request()->is('/') ? 'active' : '' }}">
                         <span class="micon bi bi-house"></span><span class="mtext">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('customers') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('customers*') ? 'active' : '' }}">
-                        <span class="micon bi bi-person"></span><span class="mtext">Customers</span>
+                    <a href="{{ route('kategori') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('kategori*') ? 'active' : '' }}">
+                        <span class="micon bi bi-folder"></span><span class="mtext">Kategori Penilaian</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('tahun') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('tahun*') ? 'active' : '' }}">
+                        <span class="micon bi bi-folder"></span><span class="mtext">Tahun Ajaran</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('santri') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('santri*') ? 'active' : '' }}">
+                        <span class="micon bi bi-people"></span><span class="mtext">Santri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('point') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('point*') ? 'active' : '' }}">
+                        <span class="micon bi bi-files"></span><span class="mtext">Point Penilaian</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('penilaian') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('penilaian*') ? 'active' : '' }}">
+                        <span class="micon bi bi-files"></span><span class="mtext">Penilaian Santri</span>
                     </a>
                 </li>
                 <li class="dropdown">

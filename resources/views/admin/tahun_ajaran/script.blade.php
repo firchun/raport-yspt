@@ -4,26 +4,22 @@
             $('#datatable-customers').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
-                ajax: '{{ url('customers-datatable') }}',
+                responsive: false,
+                ajax: '{{ url('tahun-datatable') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
 
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'tahun',
+                        name: 'tahun'
                     },
                     {
-                        data: 'phone',
-                        name: 'phone'
+                        data: 'semester',
+                        name: 'semester'
                     },
 
-                    {
-                        data: 'address',
-                        name: 'address'
-                    },
                     {
                         data: 'action',
                         name: 'action'
@@ -39,13 +35,11 @@
             window.editCustomer = function(id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/customers/edit/' + id,
+                    url: '/tahun/edit/' + id,
                     success: function(response) {
-                        $('#customersModalLabel').text('Edit Customer');
                         $('#formCustomerId').val(response.id);
-                        $('#formCustomerName').val(response.name);
-                        $('#formCustomerPhone').val(response.phone);
-                        $('#formCustomerAddress').val(response.address);
+                        $('#formCustomerNama').val(response.nama);
+                        $('#formCustomerAlamat').val(response.alamat);
                         $('#customersModal').modal('show');
                     },
                     error: function(xhr) {
@@ -58,7 +52,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/customers/store',
+                    url: '/tahun/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -79,7 +73,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/customers/store',
+                    url: '/tahun/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -97,10 +91,10 @@
                 });
             });
             window.deleteCustomers = function(id) {
-                if (confirm('Apakah Anda yakin ingin menghapus pelanggan ini?')) {
+                if (confirm('Apakah Anda yakin ingin menghapus tahun ajaran ini?')) {
                     $.ajax({
                         type: 'DELETE',
-                        url: '/customers/delete/' + id,
+                        url: '/tahun/delete/' + id,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },

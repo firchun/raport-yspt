@@ -10,8 +10,7 @@
                     <span class="d-none d-sm-inline-block"></span>
                 </span>
             </button>
-            <button class="btn btn-secondary create-new btn-primary" type="button" data-bs-toggle="modal"
-                data-bs-target="#create">
+            <button class="btn  create-new btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create">
                 <span>
                     <i class="bi bi-plus me-sm-1"> </i>
                     <span class="d-none d-sm-inline-block">Tambah Data</span>
@@ -29,9 +28,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
+                            <th>Kategori</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -39,9 +36,7 @@
                     <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
+                            <th>Kategori</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -49,6 +44,6 @@
             </div>
         </div>
     </div>
-    @include('admin.customers.components.modal')
+    @include('admin.kategori.components.modal')
 @endsection
-@include('admin.customers.script')
+@include('admin.kategori.script')

@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['Admin', 'Owner', 'User'])->default('User')->after('email');
+        Schema::create('tahun_ajaran', function (Blueprint $table) {
+            $table->id();
+            $table->string('tahun');
+            $table->enum('semester', ['Ganjil', 'Genap']);
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tahun_ajaran');
     }
 };
