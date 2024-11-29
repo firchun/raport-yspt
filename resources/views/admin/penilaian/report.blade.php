@@ -114,7 +114,7 @@
                                             <input type="hidden" name="id_kategori[]" value="{{ $item->id }}">
                                             <input type="hidden" name="id_point[]" value="{{ $itemPoint->id }}">
                                             <select name="nilai[]" id="nilai" class="form-control" required>
-                                                <option value="1">Belum Berdampak</option>
+                                                <option value="1">Belum Tampak</option>
                                                 <option value="2">Berkembang</option>
                                                 <option value="3">Mandiri</option>
                                             </select>

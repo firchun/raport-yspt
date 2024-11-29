@@ -90,7 +90,7 @@
                             <td>{{ $penilaian->point->point }}</td>
                             <td>
                                 @if ($penilaian->nilai == 1)
-                                    Belum Berdampak
+                                    Belum Tampak
                                 @elseif($penilaian->nilai == 2)
                                     Berkembang
                                 @elseif($penilaian->nilai == 3)
