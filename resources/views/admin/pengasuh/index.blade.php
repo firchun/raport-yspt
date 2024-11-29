@@ -29,9 +29,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
-                            <th>Kamar</th>
-                            <th>Kelas</th>
-                            <th>Alamat</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -40,9 +37,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
-                            <th>Kamar</th>
-                            <th>Kelas</th>
-                            <th>Alamat</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -50,6 +44,6 @@
             </div>
         </div>
     </div>
-    @include('admin.santri.components.modal')
+    @include('admin.pengasuh.components.modal')
 @endsection
-@include('admin.santri.script')
+@include('admin.pengasuh.script')

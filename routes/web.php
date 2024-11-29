@@ -2,6 +2,7 @@ a<?php
 
     use App\Http\Controllers\CustomerController;
     use App\Http\Controllers\KategoriPenilaianController;
+    use App\Http\Controllers\PengasuhController;
     use App\Http\Controllers\PenilaianSantriController;
     use App\Http\Controllers\PointPenilaianController;
     use App\Http\Controllers\ProfileController;
@@ -52,6 +53,12 @@ a<?php
         Route::get('/kategori/edit/{id}',  [KategoriPenilaianController::class, 'edit'])->name('kategori.edit');
         Route::delete('/kategori/delete/{id}',  [KategoriPenilaianController::class, 'destroy'])->name('kategori.delete');
         Route::get('/kategori-datatable', [KategoriPenilaianController::class, 'getKategoriDataTable']);
+        //pengasuh managemen
+        Route::get('/pengasuh', [PengasuhController::class, 'index'])->name('pengasuh');
+        Route::post('/pengasuh/store',  [PengasuhController::class, 'store'])->name('pengasuh.store');
+        Route::get('/pengasuh/edit/{id}',  [PengasuhController::class, 'edit'])->name('pengasuh.edit');
+        Route::delete('/pengasuh/delete/{id}',  [PengasuhController::class, 'destroy'])->name('pengasuh.delete');
+        Route::get('/pengasuh-datatable', [PengasuhController::class, 'getPengasuhDataTable']);
         // penilaian santri managemen
         Route::get('/penilaian', [PenilaianSantriController::class, 'index'])->name('penilaian');
         Route::post('/penilaian/store', [PenilaianSantriController::class, 'store'])->name('penilaian.store');

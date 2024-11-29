@@ -90,6 +90,14 @@
                         <!-- Kategori Penilaian -->
 
                         <table class="table table-bordered table-sm">
+                            <div class="mb-3">
+                                <label>Pilih Musrif/ah</label>
+                                <select class="form-control" name="id_pengasuh" required>
+                                    @foreach (App\Models\Pengasuh::all() as $pengasuhItem)
+                                        <option value="{{ $pengasuhItem->id }}">{{ $pengasuhItem->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <input type="hidden" name="id_tahun_ajaran" id="idTahunAjaran">
                             <input type="hidden" name="id_santri" value="{{ $santri->id }}">
                             @foreach (App\Models\KategoriPenilaian::all() as $item)

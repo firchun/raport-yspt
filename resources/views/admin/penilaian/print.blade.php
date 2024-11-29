@@ -31,7 +31,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #eb960e;
             color: white;
         }
 
@@ -49,23 +49,22 @@
 
 <body>
     <h1>Laporan Penilaian Santri</h1>
-
     <!-- Informasi Santri -->
     @if ($data->isNotEmpty())
         <h3>Informasi Santri</h3>
         <table class="info-table">
             <tr>
-                <td><strong>Nama Santri:</strong></td>
-                <td>{{ $data->first()->santri->nama }}</td>
-            </tr>
-
-            <tr>
-                <td><strong>Tahun Ajaran:</strong></td>
-                <td>{{ $data->first()->tahun_ajaran->tahun }}</td>
+                <td><strong>Nama</strong></td>
+                <td>: {{ $data->first()->santri->nama }}</td>
             </tr>
             <tr>
-                <td><strong>Semester:</strong></td>
-                <td>{{ $data->first()->tahun_ajaran->semester }}</td>
+                <td><strong>Kelas/Semester/TA</strong></td>
+                <td>:{{ $data->first()->santri->kelas }}/{{ $data->first()->tahun_ajaran->semester }}/{{ $data->first()->tahun_ajaran->tahun }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Kamar</strong></td>
+                <td>: {{ $data->first()->santri->kamar }}</td>
             </tr>
         </table>
 
@@ -119,8 +118,16 @@
     <div style="margin-top: 50px;">
         <div style="width: 50%; float: left; text-align: center;">
             <p>Mengetahui,</p>
-            <p style="margin-top: 70px;">(...........................)</p>
+            <p style="margin-top: 70px;">
+                {{ App\Models\PengasuhPenilaian::where('id_santri', $data->first()->santri->id)->where('id_tahun_ajaran', $data->first()->tahun_ajaran->id)->first()->pengasuh->nama ?? '-' }}<br>(Biro
+                Pengasuhan)
+            </p>
         </div>
         <div style="width: 50%; float: right; text-align: center;">
             <p>Penanggung Jawab,</p>
-            <p style="
+            <p style="margin-top: 70px;">Buya M. Dic Hidayat Ratuloly, S.PdI, MPS.<br>(Pimpinan Pondok Pesantren)</p>
+        </div>
+    </div>
+</body>
+
+</html>

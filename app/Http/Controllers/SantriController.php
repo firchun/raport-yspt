@@ -36,11 +36,15 @@ class SantriController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string',
+            'kamar' => 'required|string',
+            'kelas' => 'required|string',
         ]);
 
         $SantriData = [
             'nama' => $request->input('nama'),
             'alamat' => $request->input('alamat'),
+            'kamar' => $request->input('kamar'),
+            'kelas' => $request->input('kelas'),
         ];
 
         if ($request->filled('id')) {

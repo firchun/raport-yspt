@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KomentarPenilaian;
+use App\Models\PengasuhPenilaian;
 use App\Models\PenilaianSantri;
 use App\Models\Santri;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ class PenilaianSantriController extends Controller
     {
         // Validasi data
         $request->validate([
+            'id_pengasuh' => 'required|integer',
             'id_tahun_ajaran' => 'required|integer',
             'id_kategori' => 'required|array',
             'id_kategori.*' => 'integer',
@@ -41,6 +43,7 @@ class PenilaianSantriController extends Controller
         ]);
 
         // Proses penyimpanan data
+        $idPengasuh = $request->input('id_pengasuh');
         $idTahunAjaran = $request->input('id_tahun_ajaran');
         $idKategori = $request->input('id_kategori');
         $idSantri = $request->input('id_santri');
@@ -57,6 +60,11 @@ class PenilaianSantriController extends Controller
                 'nilai' => $nilai[$key],
             ]);
         }
+        PengasuhPenilaian::create([
+            'id_tahun_ajaran' => $idTahunAjaran,
+            'id_santri' => $idSantri,
+            'id_pengasuh' => $idPengasuh,
+        ]);
 
         // Redirect atau response setelah penyimpanan
         return redirect()->back()->with('success', 'Data penilaian berhasil disimpan.');

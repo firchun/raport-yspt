@@ -5,7 +5,7 @@
                 processing: true,
                 serverSide: true,
                 responsive: false,
-                ajax: '{{ url('santri-datatable') }}',
+                ajax: '{{ url('pengasuh-datatable') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -15,18 +15,7 @@
                         data: 'nama',
                         name: 'nama'
                     },
-                    {
-                        data: 'kamar',
-                        name: 'kamar'
-                    },
-                    {
-                        data: 'kelas',
-                        name: 'kelas'
-                    },
-                    {
-                        data: 'alamat',
-                        name: 'alamat'
-                    },
+
 
                     {
                         data: 'action',
@@ -43,13 +32,10 @@
             window.editCustomer = function(id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/santri/edit/' + id,
+                    url: '/pengasuh/edit/' + id,
                     success: function(response) {
                         $('#formCustomerId').val(response.id);
                         $('#formCustomerNama').val(response.nama);
-                        $('#formCustomerAlamat').val(response.alamat);
-                        $('#formCustomerKamar').val(response.kamar);
-                        $('#formCustomerKelas').val(response.kelas);
                         $('#customersModal').modal('show');
                     },
                     error: function(xhr) {
@@ -62,7 +48,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/santri/store',
+                    url: '/pengasuh/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -83,14 +69,13 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/santri/store',
+                    url: '/pengasuh/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
                         alert(response.message);
-                        $('#customersModalLabel').text('Edit Customer');
                         $('#formCustomerName').val('');
                         $('#datatable-customers').DataTable().ajax.reload();
                         $('#create').modal('hide');
@@ -101,10 +86,10 @@
                 });
             });
             window.deleteCustomers = function(id) {
-                if (confirm('Apakah Anda yakin ingin menghapus santri ini?')) {
+                if (confirm('Apakah Anda yakin ingin menghapus pengasuh ini?')) {
                     $.ajax({
                         type: 'DELETE',
-                        url: '/santri/delete/' + id,
+                        url: '/pengasuh/delete/' + id,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },

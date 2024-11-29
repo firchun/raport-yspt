@@ -121,6 +121,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('pengasuh') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('pengasuh*') ? 'active' : '' }}">
+                        <span class="micon bi bi-people"></span><span class="mtext">Musrif/ah</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('santri') }}"
                         class="dropdown-toggle no-arrow {{ request()->is('santri*') ? 'active' : '' }}">
                         <span class="micon bi bi-people"></span><span class="mtext">Santri</span>

@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="userModalLabel">Rubah Santri</h5>
+                <h5 class="modal-title" id="userModalLabel">Rubah Pengasuh</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     ×
                 </button>
@@ -13,20 +13,8 @@
                 <form id="userForm">
                     <input type="hidden" id="formCustomerId" name="id">
                     <div class="mb-3">
-                        <label for="formCustomerName" class="form-label">Name</label>
+                        <label for="formCustomerName" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="formCustomerNama" name="nama" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerName" class="form-label">Kamar</label>
-                        <input type="text" class="form-control" id="formCustomerKamar" name="kamar" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerName" class="form-label">Kelas</label>
-                        <input type="text" class="form-control" id="formCustomerKelas" name="kelas" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerAddress" class="form-label">Alamat</label>
-                        <input type="text" class="form-control" id="formCustomerAlamat" name="alamat" required>
                     </div>
                 </form>
             </div>
@@ -41,7 +29,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="userModalLabel">Tambah Santri</h5>
+                <h5 class="modal-title" id="userModalLabel">Tambah Pengasuh</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     ×
                 </button>
@@ -53,18 +41,7 @@
                         <label for="formCustomerName" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="formCustomerNama" name="nama" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="formCustomerName" class="form-label">Kamar</label>
-                        <input type="text" class="form-control" id="formCustomerKamar" name="kamar" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerName" class="form-label">Kelas</label>
-                        <input type="text" class="form-control" id="formCustomerKelas" name="kelas" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formCustomerAddress" class="form-label">Alamat</label>
-                        <input type="text" class="form-control" id="formCustomerAlamat" name="alamat" required>
-                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
