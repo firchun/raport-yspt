@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KomentarPenilaian;
 use App\Models\PenilaianSantri;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
@@ -26,14 +27,30 @@ class TahunAjaranController extends Controller
                 return view('admin.tahun_ajaran.components.actions', compact('TahunAjaran'));
             })
             ->addColumn('action_report', function ($TahunAjaran) use ($id_santri) {
-                $penilaian = PenilaianSantri::where('id_tahun_ajaran', $TahunAjaran->id)->count();
-                if ($penilaian <= 0) {
-                    return ' <button class="btn btn-sm btn-primary" onclick="editCustomer(' . $TahunAjaran->id . ')">Update Laporan</button>';
-                } else {
-                    return ' <button class="btn btn-sm btn-danger" onclick="printCustomer(' . $TahunAjaran->id . ',' . $id_santri . ')"><i class="bi bi-file-pdf"></i> Download Laporan</button>';
-                }
-            })
+                $output = '';
 
+                // Cek penilaian
+                $penilaian = PenilaianSantri::where('id_tahun_ajaran', $TahunAjaran->id)
+                    ->where('id_santri', $id_santri)
+                    ->count();
+
+                if ($penilaian <= 0) {
+                    $output .= '<button class="btn btn-sm btn-primary" onclick="editCustomer(' . $TahunAjaran->id . ')">Update Laporan</button> ';
+                } else {
+                    $output .= '<button class="btn btn-sm btn-danger" onclick="printCustomer(' . $TahunAjaran->id . ',' . $id_santri . ')"><i class="bi bi-file-pdf"></i> Download Laporan</button> ';
+                }
+
+                // Cek komentar
+                $komentar = KomentarPenilaian::where('id_tahun_ajaran', $TahunAjaran->id)
+                    ->where('id_santri', $id_santri)
+                    ->count();
+
+                if ($komentar <= 0) {
+                    $output .= '<button class="btn btn-sm btn-warning" onclick="komentarCustomer(' . $TahunAjaran->id . ')">Tambah Komentar</button>';
+                }
+
+                return $output;
+            })
             ->rawColumns(['action', 'action_report'])
             ->make(true);
     }

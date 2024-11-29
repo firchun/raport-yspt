@@ -42,6 +42,41 @@
     </div>
 
     <!-- Modal -->
+    <div class="modal fade" id="komentarModal" tabindex="-1" aria-labelledby="penilaianModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <form action="{{ url('penilaian/store-komentar') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="penilaianModalLabel">Tambah Komentar</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-sm">
+                            <input type="hidden" name="id_santri" value="{{ $santri->id }}">
+                            <input type="hidden" name="id_tahun_ajaran" id="idTahunAjaranKomen">
+                            @foreach (App\Models\KategoriPenilaian::all() as $item)
+                                <tr>
+                                    <td colspan="2"><b>{{ $item->kategori }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px;">Komentar : </td>
+                                    <td>
+                                        <input type="hidden" name="id_kategori[]" value="{{ $item->id }}">
+                                        <textarea class="form-control" name="komentar[]" cols="2"></textarea>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="penilaianModal" tabindex="-1" aria-labelledby="penilaianModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -144,6 +179,19 @@
                     success: function(response) {
                         $('#idTahunAjaran').val(response.id);
                         $('#penilaianModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            };
+            window.komentarCustomer = function(id) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/tahun/edit/' + id,
+                    success: function(response) {
+                        $('#idTahunAjaranKomen').val(response.id);
+                        $('#komentarModal').modal('show');
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseText);

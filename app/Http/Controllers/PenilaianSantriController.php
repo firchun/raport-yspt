@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KomentarPenilaian;
 use App\Models\PenilaianSantri;
 use App\Models\Santri;
 use Illuminate\Http\Request;
@@ -59,6 +60,40 @@ class PenilaianSantriController extends Controller
 
         // Redirect atau response setelah penyimpanan
         return redirect()->back()->with('success', 'Data penilaian berhasil disimpan.');
+    }
+    public function storeKomentar(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'id_santri' => 'required|integer',
+            'id_tahun_ajaran' => 'required|integer',
+            'komentar' => 'required|array',
+            'komentar.*' => 'nullable|string',
+        ]);
+
+        // Ambil data dari request
+        $idSantri = $request->input('id_santri');
+        $idTahunAjaran = $request->input('id_tahun_ajaran');
+        $komentarArray = $request->input('komentar');
+        $kategoriArray = $request->input('id_kategori');
+
+        // Simpan data ke database
+        if (is_array($kategoriArray) && is_array($komentarArray) && count($kategoriArray) === count($komentarArray)) {
+            foreach ($komentarArray as $index => $komentar) {
+                // Hanya proses jika `id_kategori` ada
+                if (isset($kategoriArray[$index])) {
+                    KomentarPenilaian::create([
+                        'id_santri' => $idSantri,
+                        'id_tahun_ajaran' => $idTahunAjaran,
+                        'id_kategori' => $kategoriArray[$index],
+                        'komentar' => $komentar,
+                    ]);
+                }
+            }
+        }
+
+        // Redirect dengan pesan sukses
+        return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
     }
     public function print(Request $request)
     {

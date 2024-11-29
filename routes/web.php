@@ -55,6 +55,7 @@ a<?php
         // penilaian santri managemen
         Route::get('/penilaian', [PenilaianSantriController::class, 'index'])->name('penilaian');
         Route::post('/penilaian/store', [PenilaianSantriController::class, 'store'])->name('penilaian.store');
+        Route::post('/penilaian/store-komentar', [PenilaianSantriController::class, 'storeKomentar'])->name('penilaian.store-komentar');
         Route::get('/penilaian/print', [PenilaianSantriController::class, 'print'])->name('penilaian.print');
         Route::get('/penilaian/report/{id}', [PenilaianSantriController::class, 'report'])->name('penilaian.report');
         //point penilaian managemen
