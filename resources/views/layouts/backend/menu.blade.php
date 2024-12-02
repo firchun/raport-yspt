@@ -123,7 +123,7 @@
                 <li>
                     <a href="{{ route('pengasuh') }}"
                         class="dropdown-toggle no-arrow {{ request()->is('pengasuh*') ? 'active' : '' }}">
-                        <span class="micon bi bi-people"></span><span class="mtext">Musrif/ah</span>
+                        <span class="micon bi bi-people"></span><span class="mtext">Musyrif/ah</span>
                     </a>
                 </li>
                 <li>
@@ -135,7 +135,7 @@
                 <li>
                     <a href="{{ route('point') }}"
                         class="dropdown-toggle no-arrow {{ request()->is('point*') ? 'active' : '' }}">
-                        <span class="micon bi bi-files"></span><span class="mtext">Point Penilaian</span>
+                        <span class="micon bi bi-files"></span><span class="mtext">Aspek Penilaian</span>
                     </a>
                 </li>
                 <li>

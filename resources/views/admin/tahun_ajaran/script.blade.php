@@ -19,7 +19,10 @@
                         data: 'semester',
                         name: 'semester'
                     },
-
+                    {
+                        data: 'action_all_report',
+                        name: 'action_all_report'
+                    },
                     {
                         data: 'action',
                         name: 'action'
@@ -107,6 +110,13 @@
                         }
                     });
                 }
+            };
+            window.printCustomer = function(id_tahun_ajaran, id_santri) {
+                // Membuat URL untuk membuka PDF di tab baru
+                const url = '/penilaian/print?id_tahun_ajaran=' + id_tahun_ajaran;
+
+                // Membuka URL di tab baru
+                window.open(url, '_blank');
             };
         });
     </script>

@@ -11,7 +11,7 @@ class PengasuhController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'Pengasuh',
+            'title' => 'Data Musyrif / Musyrifah',
         ];
         return view('admin.pengasuh.index', $data);
     }

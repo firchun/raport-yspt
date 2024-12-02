@@ -103,12 +103,34 @@ class PenilaianSantriController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
     }
+    // public function print(Request $request)
+    // {
+    //     $id_santri = $request->input('id_santri');
+    //     $id_tahun_ajaran = $request->input('id_tahun_ajaran');
+    //     $data = PenilaianSantri::where('id_santri', $id_santri)->where('id_tahun_ajaran', $id_tahun_ajaran)->get();
+    //     $pdf = PDF::loadView('admin.penilaian.print', compact('data'))->setPaper('A4', 'potrait');
+    //     return $pdf->download('laporan-santri.pdf');
+    // }
     public function print(Request $request)
     {
         $id_santri = $request->input('id_santri');
         $id_tahun_ajaran = $request->input('id_tahun_ajaran');
-        $data = PenilaianSantri::where('id_santri', $id_santri)->where('id_tahun_ajaran', $id_tahun_ajaran)->get();
-        $pdf = PDF::loadView('admin.penilaian.print', compact('data'))->setPaper('A4', 'potrait');
+
+        // Cek apakah `id_santri` diberikan
+        if ($id_santri) {
+            // Jika `id_santri` diberikan, ambil data untuk santri tertentu
+            $data = PenilaianSantri::where('id_santri', $id_santri)
+                ->where('id_tahun_ajaran', $id_tahun_ajaran)
+                ->get();
+        } else {
+            // Jika tidak, ambil data semua santri berdasarkan tahun ajaran
+            $data = PenilaianSantri::where('id_tahun_ajaran', $id_tahun_ajaran)->get();
+        }
+
+        // Muat view dan buat PDF
+        $pdf = PDF::loadView('admin.penilaian.print', compact('data'))->setPaper('A4', 'portrait');
+
+        // Unduh PDF
         return $pdf->download('laporan-santri.pdf');
     }
 }

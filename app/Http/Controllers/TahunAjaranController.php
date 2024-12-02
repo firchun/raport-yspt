@@ -51,7 +51,14 @@ class TahunAjaranController extends Controller
 
                 return $output;
             })
-            ->rawColumns(['action', 'action_report'])
+            ->addColumn('action_all_report', function ($TahunAjaran) use ($id_santri) {
+                $output = '';
+
+                $output .= '<button class="btn btn-sm btn-danger" onclick="printCustomer(' . $TahunAjaran->id . ')"><i class="bi bi-file-pdf"></i> Download Laporan</button> ';
+
+                return $output;
+            })
+            ->rawColumns(['action', 'action_report', 'action_all_report'])
             ->make(true);
     }
     public function store(Request $request)

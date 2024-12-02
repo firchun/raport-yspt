@@ -11,7 +11,7 @@ class PointPenilaianController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'Kategori Penilaian',
+            'title' => 'Aspek Penilaian',
         ];
         return view('admin.point.index', $data);
     }

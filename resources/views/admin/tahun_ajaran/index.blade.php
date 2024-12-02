@@ -30,6 +30,7 @@
                             <th>ID</th>
                             <th>Tahun</th>
                             <th>Semester</th>
+                            <th>Download</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -39,6 +40,7 @@
                             <th>ID</th>
                             <th>Tahun</th>
                             <th>Semester</th>
+                            <th>Download</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>

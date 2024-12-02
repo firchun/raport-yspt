@@ -109,7 +109,7 @@
                                 @endphp
                                 <tr class="bg-warning">
                                     <td>No.</td>
-                                    <td>Point</td>
+                                    <td>Aspek Penilaian</td>
                                     <td>Nilai</td>
                                 </tr>
                                 @foreach (App\Models\PointPenilaian::where('id_kategori', $item->id)->get() as $itemPoint)
