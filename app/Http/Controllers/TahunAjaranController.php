@@ -53,7 +53,7 @@ class TahunAjaranController extends Controller
 
                 // Tambahkan tombol Download Laporan di ujung kanan
                 if ($penilaian > 0) {
-                    $output .= ' <button class="btn btn-sm btn-danger" onclick="printCustomer(' . $TahunAjaran->id . ')"><i class="bi bi-file-pdf"></i> Download Laporan</button>';
+                    $output .= ' <button class="btn btn-sm btn-danger" onclick="printCustomer(' . $TahunAjaran->id . ',' . $id_santri . ')"><i class="bi bi-file-pdf"></i> Download Laporan</button>';
                 }
 
                 return $output;
