@@ -190,6 +190,6 @@ class PenilaianSantriController extends Controller
         $pdf = PDF::loadView('admin.penilaian.print', compact('data'))->setPaper('A4', 'portrait');
 
         // Unduh PDF
-        return $pdf->download('laporan-santri.pdf');
+        return $pdf->stream('laporan-santri.pdf');
     }
 }
