@@ -55,7 +55,7 @@
     <!-- Informasi Santri -->
 
 
-    @if ($data->isNotEmpty())
+    @if ($data->count() > 0)
         @foreach ($data->groupBy('id_santri') as $idSantri => $santriData)
             <table class="info-table">
                 <tr>
