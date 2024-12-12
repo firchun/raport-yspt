@@ -77,6 +77,43 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editKomentarModal" tabindex="-1" aria-labelledby="editKomentarModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <form action="{{ url('penilaian/update-komentar') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editKomentarModalLabel">Edit Komentar</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-sm">
+                            @foreach (App\Models\KategoriPenilaian::all() as $item)
+                                <tr>
+                                    <td colspan="2"><b>{{ $item->kategori }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px;">Komentar: </td>
+                                    <td>
+                                        <input type="hidden" name="id_santri[]" id="editIdSantri{{ $item->id }}">
+                                        <input type="hidden" name="id_komentar[]" id="editIdKomentar{{ $item->id }}">
+                                        <input type="hidden" name="id_kategori[]" value="{{ $item->id }}">
+                                        <textarea class="form-control" name="komentar[]" id="editKomentar{{ $item->id }}" cols="2"></textarea>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="penilaianModal" tabindex="-1" aria-labelledby="penilaianModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -84,7 +121,7 @@
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="penilaianModalLabel">Tambah Penilaian</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
                     </div>
                     <div class="modal-body">
                         <!-- Kategori Penilaian -->
@@ -136,6 +173,68 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editPenilaianModal" tabindex="-1" aria-labelledby="editPenilaianModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ url('penilaian/update') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editPenilaianModalLabel">Edit Penilaian</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-sm">
+                            {{-- <div class="mb-3">
+                                <label>Pilih Musrif/ah</label>
+                                <select class="form-control" name="id_pengasuh" id="editIdPengasuh" required>
+                                    @foreach (App\Models\Pengasuh::all() as $pengasuhItem)
+                                        <option value="{{ $pengasuhItem->id }}">{{ $pengasuhItem->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div> --}}
+                            <input type="hidden" name="id_tahun_ajaran" id="editIdTahunAjaran">
+                            <input type="hidden" name="id_santri" id="editIdSantri">
+                            @foreach (App\Models\KategoriPenilaian::all() as $item)
+                                <tr>
+                                    <td colspan="3"><b>{{ $item->kategori }}</b></td>
+                                </tr>
+                                @php
+                                    $nomor = 1;
+                                @endphp
+                                <tr class="bg-warning">
+                                    <td>No.</td>
+                                    <td>Aspek Penilaian</td>
+                                    <td>Nilai</td>
+                                </tr>
+                                @foreach (App\Models\PointPenilaian::where('id_kategori', $item->id)->get() as $itemPoint)
+                                    <tr>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $itemPoint->point }}</td>
+                                        <td>
+                                            <input type="hidden" name="id_kategori[]" value="{{ $item->id }}">
+                                            <input type="hidden" name="id_point[]" value="{{ $itemPoint->id }}">
+                                            <select name="nilai[]" id="editNilai{{ $itemPoint->id }}"
+                                                class="form-control" required>
+                                                <option value="1">Belum Tampak</option>
+                                                <option value="2">Berkembang</option>
+                                                <option value="3">Mandiri</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
@@ -200,6 +299,43 @@
                     success: function(response) {
                         $('#idTahunAjaranKomen').val(response.id);
                         $('#komentarModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            };
+            window.editKomentar = function(id, id_santri) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/penilaian/get-komentar/' + id + '/' + id_santri, // Dua parameter di URL
+                    success: function(response) {
+                        response.komentar.forEach(function(item) {
+                            $('#editIdTahunAjaranKomen').val(item.id_tahun_ajaran);
+                            $('#editIdSantri' + item.id_kategori).val(id_santri);
+                            $('#editIdKomentar' + item.id_kategori).val(item.id);
+                            $('#editKomentar' + item.id_kategori).val(item.komentar);
+                        });
+                        $('#editKomentarModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            };
+
+            window.editPenilaian = function(id) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/penilaian/get/' + id,
+                    success: function(response) {
+                        $('#editIdPengasuh').val(response.id_pengasuh);
+                        response.penilaian.forEach(function(item) {
+                            $('#editIdTahunAjaran').val(item.id_tahun_ajaran);
+                            $('#editIdSantri').val(item.id_santri);
+                            $('#editNilai' + item.id_point).val(item.nilai);
+                        });
+                        $('#editPenilaianModal').modal('show');
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseText);

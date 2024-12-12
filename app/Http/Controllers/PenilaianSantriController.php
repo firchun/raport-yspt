@@ -103,6 +103,65 @@ class PenilaianSantriController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
     }
+    public function getKomentar($id, $id_santri)
+    {
+        $komentar = KomentarPenilaian::where('id_tahun_ajaran', $id)->where('id_santri', $id_santri)->get();
+        return response()->json(['id_komentar' => $id, 'komentar' => $komentar]);
+    }
+
+    public function updateKomentar(Request $request)
+    {
+        $request->validate([
+            'id_komentar' => 'required|array',
+            'id_kategori' => 'required|array',
+            'komentar' => 'required|array',
+        ]);
+
+        foreach ($request->id_komentar as $index => $id_komentar) {
+            $komentarPenilaian = KomentarPenilaian::find($id_komentar);
+
+            if ($komentarPenilaian) {
+                $komentarPenilaian->update(['komentar' => $request->komentar[$index]]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Komentar berhasil diperbarui!');
+    }
+
+    public function getPenilaian($id)
+    {
+        $penilaian = PenilaianSantri::where('id_tahun_ajaran', $id)->get();
+        return response()->json(['penilaian' => $penilaian]);
+    }
+
+    public function updatePenilaian(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'id_point' => 'required|array',
+            'nilai' => 'required|array',
+            // 'id_pengasuh' => 'required',
+            'id_santri' => 'required',
+        ]);
+        $id_santri = $request->id_santri;
+        foreach ($request->id_point as $index => $id_point) {
+            // Update tabel penilaian_santri
+            PenilaianSantri::where('id_point', $id_point)
+                ->update(['nilai' => $request->nilai[$index]]);
+
+            // Update atau insert di tabel pengasuh_penilaian
+            // PengasuhPenilaian::updateOrCreate(
+            //     [
+            //         'id_santri' => $id_santri, // Kondisi untuk mencari data
+            //     ],
+            //     [
+            //         'id_pengasuh' => $request->id_pengasuh, // Data yang akan diupdate atau diinsert
+            //     ]
+            // );
+        }
+
+        return redirect()->back()->with('success', 'Penilaian berhasil diperbarui!');
+    }
     // public function print(Request $request)
     // {
     //     $id_santri = $request->input('id_santri');

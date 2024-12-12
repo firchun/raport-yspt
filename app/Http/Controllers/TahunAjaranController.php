@@ -35,9 +35,9 @@ class TahunAjaranController extends Controller
                     ->count();
 
                 if ($penilaian <= 0) {
-                    $output .= '<button class="btn btn-sm btn-primary" onclick="editCustomer(' . $TahunAjaran->id . ')">Update Laporan</button> ';
+                    $output .= '<button class="btn btn-sm btn-primary" onclick="editCustomer(' . $TahunAjaran->id . ')">Tambah Penilaian</button> ';
                 } else {
-                    $output .= '<button class="btn btn-sm btn-danger" onclick="printCustomer(' . $TahunAjaran->id . ',' . $id_santri . ')"><i class="bi bi-file-pdf"></i> Download Laporan</button> ';
+                    // $output .= '<button class="btn btn-sm btn-success" onclick="editPenilaian(' . $TahunAjaran->id . ')"><i class="bi bi-pencil"></i> Edit Penilaian</button> ';
                 }
 
                 // Cek komentar
@@ -46,7 +46,14 @@ class TahunAjaranController extends Controller
                     ->count();
 
                 if ($komentar <= 0) {
-                    $output .= '<button class="btn btn-sm btn-warning" onclick="komentarCustomer(' . $TahunAjaran->id . ')">Tambah Komentar</button>';
+                    $output .= '<button class="btn btn-sm btn-warning" onclick="komentarCustomer(' . $TahunAjaran->id . ', ' . $id_santri . ')">Tambah Komentar</button>';
+                } else {
+                    $output .= '<button class="btn btn-sm btn-info" onclick="editKomentar(' . $TahunAjaran->id . ',' . $id_santri . ')"><i class="bi bi-pencil-square"></i> Edit Komentar</button>';
+                }
+
+                // Tambahkan tombol Download Laporan di ujung kanan
+                if ($penilaian > 0) {
+                    $output .= ' <button class="btn btn-sm btn-danger" onclick="printCustomer(' . $TahunAjaran->id . ')"><i class="bi bi-file-pdf"></i> Download Laporan</button>';
                 }
 
                 return $output;

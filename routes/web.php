@@ -65,6 +65,11 @@ a<?php
         Route::post('/penilaian/store-komentar', [PenilaianSantriController::class, 'storeKomentar'])->name('penilaian.store-komentar');
         Route::get('/penilaian/print', [PenilaianSantriController::class, 'print'])->name('penilaian.print');
         Route::get('/penilaian/report/{id}', [PenilaianSantriController::class, 'report'])->name('penilaian.report');
+        Route::get('penilaian/get-komentar/{id}/{id_santri}', [PenilaianSantriController::class, 'getKomentar']);
+        Route::put('penilaian/update-komentar', [PenilaianSantriController::class, 'updateKomentar']);
+
+        Route::get('penilaian/get/{id}', [PenilaianSantriController::class, 'getPenilaian']);
+        Route::put('penilaian/update', [PenilaianSantriController::class, 'updatePenilaian']);
         //point penilaian managemen
         Route::get('/point', [PointPenilaianController::class, 'index'])->name('point');
         Route::post('/point/store',  [PointPenilaianController::class, 'store'])->name('point.store');
