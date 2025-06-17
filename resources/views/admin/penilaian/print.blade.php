@@ -126,7 +126,7 @@
                         <tr>
                             <td colspan="3">
                                 Komentar Tambahan : "
-                                <i>{{ App\Models\KomentarPenilaian::where('id_kategori', $kategoriId)->where('id_santri', $penilaian->id_santri)->where('id_tahun_ajaran', $penilaian->id_tahun_ajaran)->first()->komentar ?? '-' }}</i>
+                                <i>{{ App\Models\KomentarPenilaian::where('id_kategori', $kategoriId)->where('id_santri', $penilaian->id_santri)->where('id_tahun_ajaran', $penilaian->id_tahun_ajaran)->orderBy('id', 'desc')->first()->komentar ?? '-' }}</i>
                                 "
                             </td>
                         </tr>
