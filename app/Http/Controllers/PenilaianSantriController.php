@@ -210,10 +210,15 @@ class PenilaianSantriController extends Controller
             // Jika `id_santri` diberikan, ambil data untuk santri tertentu
             $data = PenilaianSantri::where('id_santri', $id_santri)
                 ->where('id_tahun_ajaran', $id_tahun_ajaran)
-                ->get();
+                ->get()
+                ->unique('id_point')
+                ->values();
         } else {
             // Jika tidak, ambil data semua santri berdasarkan tahun ajaran
-            $data = PenilaianSantri::where('id_tahun_ajaran', $id_tahun_ajaran)->get();
+            $data = PenilaianSantri::where('id_tahun_ajaran', $id_tahun_ajaran)
+                ->get()
+                ->unique('id_point')
+                ->values();
         }
 
         // Muat view dan buat PDF
