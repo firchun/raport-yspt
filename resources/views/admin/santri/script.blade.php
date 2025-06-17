@@ -12,6 +12,11 @@
                     },
 
                     {
+                        data: 'qr_code',
+                        name: 'qr_code'
+                    },
+
+                    {
                         data: 'nama',
                         name: 'nama'
                     },

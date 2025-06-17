@@ -27,9 +27,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/santri/{code}', function () {
+    return view('welcome');
+});
 
 Auth::routes(['register' => false, 'resets' => false]);
 Route::middleware(['auth:web'])->group(function () {

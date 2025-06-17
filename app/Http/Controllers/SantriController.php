@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Santri;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SantriController extends Controller
 {
@@ -30,8 +31,12 @@ class SantriController extends Controller
             ->addColumn('action_quran', function ($Santri) {
                 return view('admin.penilaian_quran.components.actions', compact('Santri'));
             })
+            ->addColumn('qr_code', function ($Santri) {
+                $url = url('/santri/' . $Santri->code);
+                return \QrCode::format('svg')->size(100)->generate($url);
+            })
 
-            ->rawColumns(['action', 'action_nilai'])
+            ->rawColumns(['action', 'action_nilai', 'qr_code'])
             ->make(true);
     }
     public function store(Request $request)

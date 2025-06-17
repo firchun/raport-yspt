@@ -151,6 +151,12 @@
                     </li>
                 @endif
                 <li>
+                    <a href="{{ route('santri') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('santri*') ? 'active' : '' }}">
+                        <span class="micon bi bi-people"></span><span class="mtext">Santri</span>
+                    </a>
+                </li>
+                <li>
                     <div class="sidebar-small-cap">Penilaian</div>
                 </li>
                 <li>

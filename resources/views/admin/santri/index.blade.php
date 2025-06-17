@@ -10,12 +10,14 @@
                     <span class="d-none d-sm-inline-block"></span>
                 </span>
             </button>
-            <button class="btn  create-new btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create">
-                <span>
-                    <i class="bi bi-plus me-sm-1"> </i>
-                    <span class="d-none d-sm-inline-block">Tambah Data</span>
-                </span>
-            </button>
+            @if (Auth::user()->role == 'Admin')
+                <button class="btn  create-new btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create">
+                    <span>
+                        <i class="bi bi-plus me-sm-1"> </i>
+                        <span class="d-none d-sm-inline-block">Tambah Data</span>
+                    </span>
+                </button>
+            @endif
         </div>
     </div>
     <div class="row justify-content-center">
@@ -24,10 +26,11 @@
                 <div class="card-body">
                     <h2>{{ $title }}</h2>
                 </div>
-                <table id="datatable-customers" class="table table-h0ver  display mb-3">
+                <table id="datatable-customers" class="table table-h0ver  display mb-3 table-sm">
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Code</th>
                             <th>Nama</th>
                             <th>Kamar</th>
                             <th>Kelas</th>
