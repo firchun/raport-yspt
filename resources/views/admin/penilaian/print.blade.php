@@ -103,7 +103,7 @@
                         <tr>
                             <th style="width: 10px;">No.</th>
                             <th>Aspel Penilaian</th>
-                            <th>Nilai</th>
+                            <th style="width: 50px;">Nilai</th>
                         </tr>
                     </thead>
                     <tbody>
