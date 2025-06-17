@@ -222,7 +222,7 @@ class PenilaianSantriController extends Controller
         }
 
         // Muat view dan buat PDF
-        $pdf = PDF::loadView('admin.penilaian.print', compact('data'))->setPaper('A4', 'portrait');
+        $pdf = PDF::loadView('admin.penilaian.print', compact('data'))->setPaper([0, 0, 595, 935], 'portrait');
 
         // Unduh PDF
         return $pdf->download('laporan-santri.pdf');
