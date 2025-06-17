@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 10px;
+            margin: 5px;
             font-size: 12px;
         }
 
@@ -57,7 +57,7 @@
 
     @if ($data->isNotEmpty())
         @foreach ($data->groupBy('id_santri') as $idSantri => $santriData)
-            <table class="info-table">
+            <table class="info-table" style="margin-bottom: 0px !important;">
                 <tr>
                     <td> <img src="{{ public_path('/img') }}/logo-pesantren.png" alt="Logo Kiri" class="logo"
                             style="width: 80px;"></td>
