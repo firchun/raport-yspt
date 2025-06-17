@@ -1,99 +1,44 @@
 @extends('layouts.auth.app')
 
 @section('content')
-    @php
-        $title = 'login';
-    @endphp
-    <div class="row align-items-center">
-        <div class="col-md-6 col-lg-7">
-            <img src="{{ asset('backend_theme') }}/vendors/images/login-page-img.png" alt="" />
+    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow">
+        <div class="flex justify-center mb-6">
+            <img src="{{ asset('img/logo-yayasan.png') }}" alt="Logo" class="w-auto h-20">
         </div>
-        <div class="col-md-6 col-lg-5">
-            <div class="login-box bg-white box-shadow border-radius-10">
-                <div class="login-title">
-                    <h2 class="text-center text-primary">{{ env('APP_NAME') ?? 'raport yayasan santri perbatasan timur' }}
-                    </h2>
-                </div>
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    {{-- <div class="select-role">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn active">
-                                <input type="radio" name="options" id="admin" />
-                                <div class="icon">
-                                    <img src="{{ asset('backend_theme') }}/vendors/images/briefcase.svg" class="svg"
-                                        alt="" />
-                                </div>
-                                <span>I'm</span>
-                                Manager
-                            </label>
-                            <label class="btn">
-                                <input type="radio" name="options" id="user" />
-                                <div class="icon">
-                                    <img src="{{ asset('backend_theme') }}/vendors/images/person.svg" class="svg"
-                                        alt="" />
-                                </div>
-                                <span>I'm</span>
-                                Employee
-                            </label>
-                        </div>
-                    </div> --}}
-                    <div class="input-group custom">
-                        <input type="email" class="form-control form-control-lg" placeholder="Email address"
-                            name="email" required />
-                        <div class="input-group-append custom">
-                            <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
-                        </div>
-                    </div>
-                    @error('email')
-                        <span class="text-danger" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                    <div class="input-group custom">
-                        <input type="password" class="form-control form-control-lg" placeholder="**********"
-                            name="password" />
-                        <div class="input-group-append custom">
-                            <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
-                        </div>
-                    </div>
-                    @error('password')
-                        <span class="text-danger" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                    <div class="row pb-30">
-                        <div class="col-6">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input"name="remember" id="remember"
-                                    {{ old('remember') ? 'checked' : '' }} />
-                                <label class="custom-control-label" for="remember">Remember</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="forgot-password">
-                                <a href="{{ route('password.request') }}">Forgot Password</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="input-group mb-0">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Sign
-                                    In</button>
-                            </div>
-                            {{-- <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
-                                OR
-                            </div>
-                            <div class="input-group mb-0">
-                                <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('register') }}">Register
-                                    To Create
-                                    Account</a>
-                            </div> --}}
-                        </div>
-                    </div>
-                </form>
+        <h2 class="text-2xl font-semibold text-center mb-1">E-raport </h2>
+        <h3 class="text-lg font-semibold text-center mb-1">Pondok Pesantren Santri Perbatasan Timur</h3>
+        <p class="text-gray-500 text-center mb-6"> اَلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَا تُهُ</p>
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input id="email" type="email" name="email" required autofocus placeholder="Enter your email"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200">
             </div>
-        </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input id="password" type="password" name="password" required placeholder="••••••••"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200">
+            </div>
+
+            <div class="flex items-center justify-between mb-6">
+                <label class="flex items-center space-x-2 text-sm text-gray-700">
+                    <input type="checkbox" name="remember" class="form-checkbox text-blue-600">
+                    <span>Remember me</span>
+                </label>
+                {{-- <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:underline">Forgot password</a> --}}
+            </div>
+
+            <button type="submit" class="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition">Sign
+                in</button>
+
+
+
+
+
+        </form>
     </div>
 @endsection

@@ -7,15 +7,10 @@
             <button class="btn btn-secondary refresh btn-default" type="button">
                 <span>
                     <i class="bi bi-arrow-clockwise me-sm-1"> </i>
-                    <span class="d-none d-sm-inline-block"></span>
+                    <span class="d-none d-sm-inline-block">Refresh Data</span>
                 </span>
             </button>
-            <button class="btn  create-new btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create">
-                <span>
-                    <i class="bi bi-plus me-sm-1"> </i>
-                    <span class="d-none d-sm-inline-block">Tambah Data</span>
-                </span>
-            </button>
+
         </div>
     </div>
     <div class="row justify-content-center">
@@ -29,8 +24,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
-                            <th>Status</th>
-                            <th>Account</th>
+                            <th>Alamat</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -39,8 +33,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
-                            <th>Status</th>
-                            <th>Account</th>
+                            <th>Alamat</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -48,6 +41,5 @@
             </div>
         </div>
     </div>
-    @include('admin.pengasuh.components.modal')
 @endsection
-@include('admin.pengasuh.script')
+@include('admin.penilaian.script')

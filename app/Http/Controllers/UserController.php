@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Pengasuh;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -21,6 +23,46 @@ class UserController extends Controller
             'users' => User::all()
         ];
         return view('admin.users.index', $data);
+    }
+    public function createFromPengasuh(Request $request)
+    {
+        $pengasuh = Pengasuh::findOrFail($request->id);
+
+        $namaSlug = Str::slug($pengasuh->nama, '_');
+        $email = $namaSlug . '@yspt.com';
+
+        $existingUser = User::where('email', $email)->first();
+        if ($existingUser) {
+            return response()->json([
+                'message' => 'Akun sudah ada.',
+                'user' => [
+                    'id' => $existingUser->id,
+                    'name' => $existingUser->name,
+                    'email' => $existingUser->email
+                ]
+            ], 400);
+        }
+
+        $user = User::create([
+            'name' => $pengasuh->nama,
+            'email' => $email,
+            'password' => Hash::make('password'),
+            'role' => 'User',
+        ]);
+
+        return response()->json([
+            'message' => 'Akun berhasil dibuat untuk ' . $pengasuh->nama
+        ]);
+    }
+    public function resetPassword(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->password = Hash::make('password');
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password berhasil di-reset ke "password".'
+        ]);
     }
     public function getUsersDataTable()
     {

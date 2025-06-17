@@ -28,9 +28,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nama</th>
-                            <th>Status</th>
-                            <th>Account</th>
+                            <th>Aspek</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -38,9 +36,7 @@
                     <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>Nama</th>
-                            <th>Status</th>
-                            <th>Account</th>
+                            <th>Aspek</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -48,6 +44,6 @@
             </div>
         </div>
     </div>
-    @include('admin.pengasuh.components.modal')
+    @include('admin.kategori_quran.components.modal')
 @endsection
-@include('admin.pengasuh.script')
+@include('admin.kategori_quran.script')

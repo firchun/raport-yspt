@@ -27,6 +27,9 @@ class SantriController extends Controller
             ->addColumn('action_nilai', function ($Santri) {
                 return view('admin.penilaian.components.actions', compact('Santri'));
             })
+            ->addColumn('action_quran', function ($Santri) {
+                return view('admin.penilaian_quran.components.actions', compact('Santri'));
+            })
 
             ->rawColumns(['action', 'action_nilai'])
             ->make(true);

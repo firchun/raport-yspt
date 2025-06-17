@@ -109,6 +109,25 @@ class PenilaianSantriController extends Controller
         return response()->json(['id_komentar' => $id, 'komentar' => $komentar]);
     }
 
+    // public function updateKomentar(Request $request)
+    // {
+    //     $request->validate([
+    //         'id_komentar' => 'required|array',
+    //         'id_kategori' => 'required|array',
+    //         'komentar' => 'required|array',
+    //     ]);
+
+    //     foreach ($request->id_komentar as $index => $id_komentar) {
+    //         $komentarPenilaian = KomentarPenilaian::find($id_komentar);
+
+    //         if ($komentarPenilaian) {
+    //             $komentarPenilaian->update(['komentar' => $request->komentar[$index]]);
+    //         }
+    //     }
+
+
+    //     return redirect()->back()->with('success', 'Komentar berhasil diperbarui!');
+    // }
     public function updateKomentar(Request $request)
     {
         $request->validate([
@@ -117,15 +136,26 @@ class PenilaianSantriController extends Controller
             'komentar' => 'required|array',
         ]);
 
-        foreach ($request->id_komentar as $index => $id_komentar) {
-            $komentarPenilaian = KomentarPenilaian::find($id_komentar);
+        foreach ($request->id_kategori as $index => $id_kategori) {
+            $id_komentar = $request->id_komentar[$index] ?? null;
+            $komentar = $request->komentar[$index];
 
-            if ($komentarPenilaian) {
-                $komentarPenilaian->update(['komentar' => $request->komentar[$index]]);
+            if ($id_komentar && $komentarPenilaian = KomentarPenilaian::find($id_komentar)) {
+                // Update jika ada
+                $komentarPenilaian->update([
+                    'komentar' => $komentar,
+                ]);
+            } else {
+                // Create jika belum ada
+                KomentarPenilaian::create([
+                    'id_kategori' => $id_kategori,
+                    'id_penilaian' => $request->id_penilaian, // sesuaikan jika perlu
+                    'komentar' => $komentar,
+                ]);
             }
         }
 
-        return redirect()->back()->with('success', 'Komentar berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Komentar berhasil diperbarui atau ditambahkan!');
     }
 
     public function getPenilaian($id)

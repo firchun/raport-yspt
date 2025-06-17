@@ -1,34 +1,20 @@
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
             $('#datatable-customers').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: false,
-                ajax: '{{ url('pengasuh-datatable') }}',
+                ajax: '{{ url('kategori-quran-datatable') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
 
                     {
-                        data: 'nama',
-                        name: 'nama'
+                        data: 'kategori',
+                        name: 'kategori'
                     },
-                    {
-                        data: 'disabled',
-                        name: 'disabled',
-                        render: function(data, type, row, meta) {
-                            return data ? '<span class="badge badge-danger">Disabled</span>' :
-                                '<span class="badge badge-success">Aktif</span>';
-                        }
-                    }, {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-
-
                     {
                         data: 'action',
                         name: 'action'
@@ -44,10 +30,10 @@
             window.editCustomer = function(id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/pengasuh/edit/' + id,
+                    url: '/kategori-quran/edit/' + id,
                     success: function(response) {
                         $('#formCustomerId').val(response.id);
-                        $('#formCustomerNama').val(response.nama);
+                        $('#formCustomerKategori').val(response.kategori);
                         $('#customersModal').modal('show');
                     },
                     error: function(xhr) {
@@ -60,7 +46,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/pengasuh/store',
+                    url: '/kategori-quran/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -81,7 +67,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/pengasuh/store',
+                    url: '/kategori-quran/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -98,10 +84,10 @@
                 });
             });
             window.deleteCustomers = function(id) {
-                if (confirm('Apakah Anda yakin ingin menghapus pengasuh ini?')) {
+                if (confirm('Apakah Anda yakin ingin menghapus kategori ini?')) {
                     $.ajax({
                         type: 'DELETE',
-                        url: '/pengasuh/delete/' + id,
+                        url: '/kategori-quran/delete/' + id,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -114,66 +100,6 @@
                         }
                     });
                 }
-            };
-
-            window.accountCustomer = function(pengasuhId) {
-                if (!confirm('Buat akun untuk pengasuh ini?')) return;
-
-                $.ajax({
-                    url: '/admin/create-user-from-pengasuh',
-                    method: 'POST',
-                    data: {
-                        id: pengasuhId,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        alert(response.message);
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 400 && xhr.responseJSON.user) {
-                            const user = xhr.responseJSON.user;
-                            const html = `
-                    <div style="text-align:left">
-                        <p><strong>Email:</strong> ${user.email}</p>
-                        <p><strong>Username:</strong> ${user.name}</p>
-                        <button class="btn btn-sm btn-danger" onclick="resetPassword(${user.id})">Reset Password</button>
-                    </div>
-                `;
-                            Swal.fire({
-                                icon: 'info',
-                                title: 'Akun Sudah Ada',
-                                html: html
-                            });
-                        } else {
-                            alert(xhr.responseJSON.message);
-                        }
-                    }
-                });
-            };
-
-            window.resetPassword = function(userId) {
-                $.ajax({
-                    url: '/admin/reset-user-password',
-                    method: 'POST',
-                    data: {
-                        id: userId,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message
-                        });
-                    },
-                    error: function(xhr) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: xhr.responseJSON.message
-                        });
-                    }
-                });
             };
         });
     </script>

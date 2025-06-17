@@ -88,12 +88,12 @@
     </div>
 </div>
 <div class="left-side-bar">
-    <div class="brand-logo">
+    <div class="brand-logo d-flex flex-column align-items-center justify-content-center text-center"
+        style="height: 100px;">
         <a href="{{ route('home') }}">
-            <img src="{{ asset('backend_theme') }}/vendors/images/deskapp-logo.svg" alt=""
-                class="dark-logo" />
-            <img src="{{ asset('backend_theme') }}/vendors/images/deskapp-logo-white.svg" alt=""
-                class="light-logo" />
+            <img src="{{ asset('/img') }}/logo-yayasan.png" alt="Logo" class="dark-logo" style="width: 80px;" />
+            <img src="{{ asset('/img') }}/logo-yayasan.png" alt="Logo" class="light-logo"
+                style="width: 80px;" />
         </a>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
             <i class="ion-close-round"></i>
@@ -108,53 +108,79 @@
                         <span class="micon bi bi-house"></span><span class="mtext">Dashboard</span>
                     </a>
                 </li>
+                @if (Auth::user()->role == 'Admin')
+                    <li>
+                        <div class="sidebar-small-cap">Master Data</div>
+                    </li>
+                    <li>
+                        <a href="{{ route('kategori') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('kategori') ? 'active' : '' }}">
+                            <span class="micon bi bi-folder"></span><span class="mtext">Kategori Penilaian</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('tahun') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('tahun*') ? 'active' : '' }}">
+                            <span class="micon bi bi-folder"></span><span class="mtext">Tahun Ajaran</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('pengasuh') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('pengasuh*') ? 'active' : '' }}">
+                            <span class="micon bi bi-people"></span><span class="mtext">Musyrif/ah</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('santri') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('santri*') ? 'active' : '' }}">
+                            <span class="micon bi bi-people"></span><span class="mtext">Santri</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('point') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('point*') ? 'active' : '' }}">
+                            <span class="micon bi bi-files"></span><span class="mtext">Aspek Penilaian</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('kategori-quran') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('kategori-quran') ? 'active' : '' }}">
+                            <span class="micon bi bi-files"></span><span class="mtext">Aspek Penilaian Quran</span>
+                        </a>
+                    </li>
+                @endif
                 <li>
-                    <a href="{{ route('kategori') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('kategori*') ? 'active' : '' }}">
-                        <span class="micon bi bi-folder"></span><span class="mtext">Kategori Penilaian</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('tahun') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('tahun*') ? 'active' : '' }}">
-                        <span class="micon bi bi-folder"></span><span class="mtext">Tahun Ajaran</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('pengasuh') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('pengasuh*') ? 'active' : '' }}">
-                        <span class="micon bi bi-people"></span><span class="mtext">Musyrif/ah</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('santri') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('santri*') ? 'active' : '' }}">
-                        <span class="micon bi bi-people"></span><span class="mtext">Santri</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('point') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('point*') ? 'active' : '' }}">
-                        <span class="micon bi bi-files"></span><span class="mtext">Aspek Penilaian</span>
-                    </a>
+                    <div class="sidebar-small-cap">Penilaian</div>
                 </li>
                 <li>
                     <a href="{{ route('penilaian') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('penilaian*') ? 'active' : '' }}">
+                        class="dropdown-toggle no-arrow {{ request()->is('penilaian') || request()->is('penilaian/report*') ? 'active' : '' }}">
                         <span class="micon bi bi-files"></span><span class="mtext">Penilaian Santri</span>
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi bi-people"></span><span class="mtext">Pengguna</span>
+                <li>
+                    <a href="{{ route('penilaian-quran') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('penilaian-quran*') || request()->is('penilaian-quran/report*') ? 'active' : '' }}">
+                        <span class="micon bi bi-files"></span><span class="mtext">Penilaian Quran</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('users') }}"
-                                class="{{ request()->is('users') ? 'active' : '' }}">Pengguna</a></li>
-
-                    </ul>
                 </li>
 
+                {{-- @if (Auth::user()->role == 'Admin')
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-people"></span><span class="mtext">Pengguna</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="{{ route('users') }}"
+                                    class="{{ request()->is('users') ? 'active' : '' }}">Pengguna</a></li>
+
+                        </ul>
+                    </li>
+                @endif --}}
+                <li>
+                    <div class="sidebar-small-cap">Akun</div>
+                </li>
                 <li>
                     <a href="{{ url('/profile') }}"
                         class="dropdown-toggle no-arrow {{ request()->is('profile*') ? 'active' : '' }}">
