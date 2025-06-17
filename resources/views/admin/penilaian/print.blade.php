@@ -8,7 +8,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
             font-size: 12px;
         }
 
@@ -100,7 +101,7 @@
                             <th colspan="3">{{ $kategoriData->first()->kategori->kategori ?? '-' }}</th>
                         </tr>
                         <tr>
-                            <th>No.</th>
+                            <th style="width: 10px;">No.</th>
                             <th>Aspel Penilaian</th>
                             <th>Nilai</th>
                         </tr>
