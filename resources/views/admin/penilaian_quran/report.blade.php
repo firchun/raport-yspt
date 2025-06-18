@@ -42,27 +42,31 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="komentarModal" tabindex="-1" aria-labelledby="penilaianModalLabel" aria-hidden="true">
+
+    <div class="modal fade" id="editKomentarModal" tabindex="-1" aria-labelledby="editKomentarModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ url('penilaian-quran/store-komentar') }}" method="POST">
+                <form action="{{ url('penilaian-quran/store') }}" method="POST">
                     @csrf
+                    @method('POST')
                     <div class="modal-header">
-                        <h5 class="modal-title" id="penilaianModalLabel">Tambah Komentar</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="editKomentarModalLabel">Komentar</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" name="id_tahun_ajaran"
+                            value="{{ App\Models\TahunAjaran::latest()->first()->id }}">
                         <table class="table table-bordered table-sm">
                             <input type="hidden" name="id_santri" value="{{ $santri->id }}">
-                            <input type="hidden" name="id_tahun_ajaran" id="idTahunAjaranKomen">
                             @foreach (App\Models\KategoriPenilaianQuran::all() as $item)
                                 <tr>
-                                    <td class="bg-warning"><b>{{ $item->kategori }}</b></td>
+                                    <td><b>{{ $item->kategori }}</b></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="hidden" name="id_kategori[]" value="{{ $item->id }}">
-                                        <textarea class="form-control" name="komentar[]" cols="2"></textarea>
+                                        <input type="hidden" name="id_kategori_quran[]" value="{{ $item->id }}">
+                                        <textarea class="form-control" name="komentar[]" id="editKomentar{{ $item->id }}" cols="2"></textarea>
                                     </td>
                                 </tr>
                             @endforeach
@@ -76,66 +80,30 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="editKomentarModal" tabindex="-1" aria-labelledby="editKomentarModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <form action="{{ url('penilaian/update-komentar') }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editKomentarModalLabel">Komentar</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table table-bordered table-sm">
-                            @foreach (App\Models\KategoriPenilaian::all() as $item)
-                                <tr>
-                                    <td colspan="2"><b>{{ $item->kategori }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 150px;">Komentar: </td>
-                                    <td>
-                                        <input type="hidden" name="id_santri[]" id="editIdSantri{{ $item->id }}">
-                                        <input type="hidden" name="id_komentar[]" id="editIdKomentar{{ $item->id }}">
-                                        <input type="hidden" name="id_kategori[]" value="{{ $item->id }}">
-                                        <textarea class="form-control" name="komentar[]" id="editKomentar{{ $item->id }}" cols="2"></textarea>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="penilaianModal" tabindex="-1" aria-labelledby="penilaianModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ url('penilaian-quran/store') }}" method="POST">
+                <form action="{{ url('pencapaian-quran/store') }}" method="POST">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="penilaianModalLabel">Penilaian Quran</h5>
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
                     </div>
                     <div class="modal-body">
-                        <!-- Kategori Penilaian -->
+
+                        <div class="mb-3">
+                            <label>Pilih Musrif/ah Quran</label>
+                            <select class="form-control" name="id_pengasuh" required>
+                                @foreach (App\Models\Pengasuh::all() as $pengasuhItem)
+                                    <option value="{{ $pengasuhItem->id }}">{{ $pengasuhItem->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <input type="hidden" name="id_tahun_ajaran" id="idTahunAjaran">
+                        <input type="hidden" name="id_santri" value="{{ $santri->id }}">
 
                         <table class="table table-bordered table-sm">
-                            <div class="mb-3">
-                                <label>Pilih Musrif/ah Quran</label>
-                                <select class="form-control" name="id_pengasuh" required>
-                                    @foreach (App\Models\Pengasuh::all() as $pengasuhItem)
-                                        <option value="{{ $pengasuhItem->id }}">{{ $pengasuhItem->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <input type="hidden" name="id_tahun_ajaran" id="idTahunAjaran">
-                            <input type="hidden" name="id_santri" value="{{ $santri->id }}">
                             <tr>
                                 <td colspan="3" class="text-center"><b>Indikator Pencapaian</b></td>
                             </tr>
@@ -147,33 +115,40 @@
                             <tr>
                                 <td>1</td>
                                 <td>Kelancaran</td>
-                                <td><select class="form-control" name="">
+                                <td>
+                                    <select class="form-control" name="kelancaran" required>
                                         <option value="Jayyid Jiddan">Jayyid Jiddan</option>
                                         <option value="Jayyid">Jayyid</option>
                                         <option value="Maqbul">Maqbul</option>
                                         <option value="Perlu Bimbingan">Perlu Bimbingan</option>
-                                    </select> </td>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>Makhraj</td>
-                                <td><select class="form-control">
+                                <td>
+                                    <select class="form-control" name="makhraj" required>
                                         <option value="Jayyid Jiddan">Jayyid Jiddan</option>
                                         <option value="Jayyid">Jayyid</option>
                                         <option value="Maqbul">Maqbul</option>
                                         <option value="Perlu Bimbingan">Perlu Bimbingan</option>
-                                    </select> </td>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>Tajwid</td>
-                                <td><select class="form-control">
+                                <td>
+                                    <select class="form-control" name="tajwid" required>
                                         <option value="Jayyid Jiddan">Jayyid Jiddan</option>
                                         <option value="Jayyid">Jayyid</option>
                                         <option value="Maqbul">Maqbul</option>
                                         <option value="Perlu Bimbingan">Perlu Bimbingan</option>
-                                    </select> </td>
+                                    </select>
+                                </td>
                             </tr>
+
                             <tr>
                                 <td colspan="3" class="text-center"><b>Kriteria Sikap</b></td>
                             </tr>
@@ -183,24 +158,28 @@
                                 <td>Nilai</td>
                             </tr>
                             <tr>
-                                <td>1</td>
+                                <td>4</td>
                                 <td>Kegigihan</td>
-                                <td><select class="form-control">
+                                <td>
+                                    <select class="form-control" name="kegigihan" required>
                                         <option value="Jayyid Jiddan">Jayyid Jiddan</option>
                                         <option value="Jayyid">Jayyid</option>
                                         <option value="Maqbul">Maqbul</option>
                                         <option value="Perlu Bimbingan">Perlu Bimbingan</option>
-                                    </select> </td>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
-                                <td>1</td>
+                                <td>5</td>
                                 <td>Adab</td>
-                                <td><select class="form-control">
+                                <td>
+                                    <select class="form-control" name="adab" required>
                                         <option value="Jayyid Jiddan">Jayyid Jiddan</option>
                                         <option value="Jayyid">Jayyid</option>
                                         <option value="Maqbul">Maqbul</option>
                                         <option value="Perlu Bimbingan">Perlu Bimbingan</option>
-                                    </select> </td>
+                                    </select>
+                                </td>
                             </tr>
                         </table>
 
@@ -208,68 +187,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="editPenilaianModal" tabindex="-1" aria-labelledby="editPenilaianModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form action="{{ url('penilaian/update') }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editPenilaianModalLabel">Edit Penilaian</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table table-bordered table-sm">
-                            {{-- <div class="mb-3">
-                                <label>Pilih Musrif/ah</label>
-                                <select class="form-control" name="id_pengasuh" id="editIdPengasuh" required>
-                                    @foreach (App\Models\Pengasuh::all() as $pengasuhItem)
-                                        <option value="{{ $pengasuhItem->id }}">{{ $pengasuhItem->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
-                            <input type="hidden" name="id_tahun_ajaran" id="editIdTahunAjaran">
-                            <input type="hidden" name="id_santri" id="editIdSantri">
-                            @foreach (App\Models\KategoriPenilaian::all() as $item)
-                                <tr>
-                                    <td colspan="3"><b>{{ $item->kategori }}</b></td>
-                                </tr>
-                                @php
-                                    $nomor = 1;
-                                @endphp
-                                <tr class="bg-warning">
-                                    <td>No.</td>
-                                    <td>Aspek Penilaian</td>
-                                    <td>Nilai</td>
-                                </tr>
-                                @foreach (App\Models\PointPenilaian::where('id_kategori', $item->id)->get() as $itemPoint)
-                                    <tr>
-                                        <td>{{ $nomor++ }}</td>
-                                        <td>{{ $itemPoint->point }}</td>
-                                        <td>
-                                            <input type="hidden" name="id_kategori[]" value="{{ $item->id }}">
-                                            <input type="hidden" name="id_point[]" value="{{ $itemPoint->id }}">
-                                            <select name="nilai[]" id="editNilai{{ $itemPoint->id }}"
-                                                class="form-control" required>
-                                                <option value="1">Belum Tampak</option>
-                                                <option value="2">Berkembang</option>
-                                                <option value="3">Mandiri</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endforeach
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
@@ -343,13 +260,11 @@
             window.editKomentar = function(id, id_santri) {
                 $.ajax({
                     type: 'GET',
-                    url: '/penilaian/get-komentar/' + id + '/' + id_santri, // Dua parameter di URL
+                    url: '/penilaian-quran/get-komentar/' + id + '/' +
+                        id_santri, // Dua parameter di URL
                     success: function(response) {
                         response.komentar.forEach(function(item) {
-                            $('#editIdTahunAjaranKomen').val(item.id_tahun_ajaran);
-                            $('#editIdSantri' + item.id_kategori).val(id_santri);
-                            $('#editIdKomentar' + item.id_kategori).val(item.id);
-                            $('#editKomentar' + item.id_kategori).val(item.komentar);
+                            $('#editKomentar' + item.id_kategori_quran).val(item.komentar);
                         });
                         $('#editKomentarModal').modal('show');
                     },
@@ -379,7 +294,8 @@
             };
             window.printCustomer = function(id_tahun_ajaran, id_santri) {
                 // Membuat URL untuk membuka PDF di tab baru
-                const url = '/penilaian/print?id_santri=' + id_santri + '&id_tahun_ajaran=' + id_tahun_ajaran;
+                const url = '/penilaian-quran/print?id_santri=' + id_santri + '&id_tahun_ajaran=' +
+                    id_tahun_ajaran;
 
                 // Membuka URL di tab baru
                 window.open(url, '_blank');

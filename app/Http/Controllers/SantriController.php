@@ -33,7 +33,7 @@ class SantriController extends Controller
             })
             ->addColumn('qr_code', function ($Santri) {
                 $url = url('/santri/' . $Santri->code);
-                return \QrCode::format('svg')->size(100)->generate($url);
+                return \QrCode::format('svg')->size(100)->generate($url) . '<br><a href="' . url('/santri', $Santri->code) . '" target="__blank" class="text-link">' . $Santri->code . '</a>';
             })
 
             ->rawColumns(['action', 'action_nilai', 'qr_code'])

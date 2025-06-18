@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\UserController;
+use App\Models\Santri;
 use App\Models\TahunAjaran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +28,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/santri/{code}', function () {
-    return view('welcome');
+Route::get('/santri/{code}', function ($code) {
+    $santri = Santri::where('code', $code)->first();
+    $data = [
+        'title' => $santri ? 'Laporan Santri  : ' . $santri->nama : 'Data Tidak Ditemukan',
+        'santri' => $santri,
+    ];
+    return view('welcome', $data);
 });
 
 Auth::routes(['register' => false, 'resets' => false]);
@@ -75,7 +81,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/penilaian-quran', [PenilaianQuranController::class, 'index'])->name('penilaian-quran');
     Route::get('/penilaian-quran/report/{id}', [PenilaianQuranController::class, 'report'])->name('penilaian-quran.report');
     Route::post('/penilaian-quran/store', [PenilaianQuranController::class, 'store'])->name('penilaian-quran.store');
+    Route::post('/pencapaian-quran/store', [PenilaianQuranController::class, 'storePencapaian'])->name('pencapaian-quran.store');
     Route::post('/penilaian-quran/store-komentar', [PenilaianQuranController::class, 'storeKomentar'])->name('penilaian-quran.store-komentar');
+    Route::get('penilaian-quran/get-komentar/{id}/{id_santri}', [PenilaianQuranController::class, 'getKomentar']);
+    Route::get('/penilaian-quran/print', [PenilaianQuranController::class, 'print'])->name('penilaian-quran.print');
     // penilaian santri managemen
     Route::get('/penilaian', [PenilaianSantriController::class, 'index'])->name('penilaian');
     Route::post('/penilaian/store', [PenilaianSantriController::class, 'store'])->name('penilaian.store');

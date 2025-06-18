@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PencapaianQuran;
 use App\Models\PengasuhQuran;
 use App\Models\PenilaianQuran;
 use App\Models\Santri;
 use Illuminate\Http\Request;
+use PDF;
 
 class PenilaianQuranController extends Controller
 {
@@ -27,76 +29,95 @@ class PenilaianQuranController extends Controller
     }
     public function store(Request $request)
     {
-        // Validasi input
+        // Validasi sederhana
         $request->validate([
-            'id_pengasuh' => 'required|integer|exists:pengasuh,id',
-            'id_tahun_ajaran' => 'required|integer|exists:tahun_ajaran,id',
-            'id_santri' => 'required|integer|exists:santri,id',
-            'id_kategori' => 'required|array',
-            'id_kategori.*' => 'integer',
-            'nilai' => 'required|array',
-            'nilai.*' => 'integer|min:0|max:3',
+            'id_santri' => 'required',
+            'id_kategori_quran' => 'required|array',
+            'komentar' => 'nullable|array',
+            'id_tahun_ajaran' => 'required', // Pastikan ini dikirim dari form
         ]);
 
-        $idPengasuh = $request->input('id_pengasuh');
-        $idTahunAjaran = $request->input('id_tahun_ajaran');
-        $idSantri = $request->input('id_santri');
-        $idKategori = $request->input('id_kategori');
-        $nilai = $request->input('nilai');
-
-        // Simpan setiap nilai ke tabel PenilaianQuran
-        foreach ($idKategori as $key => $idKategori) {
+        $id_santri = $request->id_santri; // sudah single value
+        $id_kategori_quran = $request->id_kategori_quran; // array
+        $komentar = $request->komentar; // array
+        $id_tahun_ajaran = $request->id_tahun_ajaran;
+        // dd($request->all());
+        for ($i = 0; $i < count($id_kategori_quran); $i++) {
             PenilaianQuran::create([
-                'id_tahun_ajaran' => $idTahunAjaran,
-                'id_santri' => $idSantri,
-                'id_kategori_quran' => $idKategori[$key],
-                'komentar' => $nilai[$key],
+                'id_kategori_quran' => $id_kategori_quran[$i],
+                'id_santri' => $id_santri, // langsung single value
+                'id_tahun_ajaran' => $id_tahun_ajaran,
+                'komentar' => $komentar[$i],
             ]);
         }
 
+        return redirect()->back()->with('success', 'Data penilaian Quran berhasil disimpan.');
+    }
+
+    public function storePencapaian(Request $request)
+    {
+        $request->validate([
+            'id_tahun_ajaran' => 'required|exists:tahun_ajaran,id',
+            'id_santri' => 'required|exists:santri,id',
+            'id_pengasuh' => 'required|exists:pengasuh,id',
+            'kelancaran' => 'required|in:Jayyid Jiddan,Jayyid,Maqbul,Perlu Bimbingan',
+            'makhraj' => 'required|in:Jayyid Jiddan,Jayyid,Maqbul,Perlu Bimbingan',
+            'tajwid' => 'required|in:Jayyid Jiddan,Jayyid,Maqbul,Perlu Bimbingan',
+            'kegigihan' => 'required|in:Jayyid Jiddan,Jayyid,Maqbul,Perlu Bimbingan',
+            'adab' => 'required|in:Jayyid Jiddan,Jayyid,Maqbul,Perlu Bimbingan',
+        ]);
+
+        $pencapaian = PencapaianQuran::create([
+            'id_tahun_ajaran' => $request->id_tahun_ajaran,
+            'id_santri' => $request->id_santri,
+            'kelancaran' => $request->kelancaran,
+            'makhraj' => $request->makhraj,
+            'tajwid' => $request->tajwid,
+            'kegigihan' => $request->kegigihan,
+            'adab' => $request->adab,
+        ]);
         // Simpan data pengasuh Quran
         PengasuhQuran::updateOrCreate(
             [
-                'id_tahun_ajaran' => $idTahunAjaran,
-                'id_santri' => $idSantri,
-                'id_pengasuh' => $idPengasuh,
+                'id_tahun_ajaran' => $request->id_tahun_ajaran,
+                'id_santri' => $request->id_santri,
+                'id_pengasuh' => $request->id_pengasuh,
             ]
         );
 
-        return redirect()->back()->with('success', 'Penilaian berhasil disimpan.');
+        return back()->with('success', 'Pencapaian Quran berhasil disimpan.');
     }
-    public function storeKomentar(Request $request)
+    public function getKomentar($id, $id_santri)
     {
-        // Validasi data
-        $request->validate([
-            'id_santri' => 'required|integer',
-            'id_tahun_ajaran' => 'required|integer',
-            'komentar' => 'required|array',
-            'komentar.*' => 'nullable|string',
-        ]);
+        $komentar = PenilaianQuran::where('id_tahun_ajaran', $id)->where('id_santri', $id_santri)->get();
+        return response()->json(['id_komentar' => $id, 'komentar' => $komentar]);
+    }
+    public function print(Request $request)
+    {
+        $id_santri = $request->input('id_santri');
+        $id_tahun_ajaran = $request->input('id_tahun_ajaran');
 
-        // Ambil data dari request
-        $idSantri = $request->input('id_santri');
-        $idTahunAjaran = $request->input('id_tahun_ajaran');
-        $komentarArray = $request->input('komentar');
-        $kategoriArray = $request->input('id_kategori');
-
-        // Simpan data ke database
-        if (is_array($kategoriArray) && is_array($komentarArray) && count($kategoriArray) === count($komentarArray)) {
-            foreach ($komentarArray as $index => $komentar) {
-                // Hanya proses jika `id_kategori` ada
-                if (isset($kategoriArray[$index])) {
-                    KomentarPenilaian::create([
-                        'id_santri' => $idSantri,
-                        'id_tahun_ajaran' => $idTahunAjaran,
-                        'id_kategori' => $kategoriArray[$index],
-                        'komentar' => $komentar,
-                    ]);
-                }
-            }
+        // Cek apakah `id_santri` diberikan
+        if ($id_santri) {
+            // Jika `id_santri` diberikan, ambil data untuk santri tertentu
+            $data = PenilaianQuran::where('id_santri', $id_santri)
+                ->where('id_tahun_ajaran', $id_tahun_ajaran)
+                ->get()
+                ->unique('id_kategori_quran')
+                ->values();
+        } else {
+            // Jika tidak, ambil data semua santri berdasarkan tahun ajaran
+            $data = PenilaianQuran::where('id_tahun_ajaran', $id_tahun_ajaran)
+                ->get()
+                ->unique('id_kategori_quran')
+                ->values();
         }
 
-        // Redirect dengan pesan sukses
-        return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
+        // Muat view dan buat PDF
+        $pdf = PDF::loadView('admin.penilaian_quran.print', compact('data'))->setPaper([0, 0, 595, 935], 'portrait');
+
+        // Unduh PDF
+        return $pdf->download('laporan-santri.pdf');
+        // return $pdf->stream('laporan-santri.pdf');
     }
 }

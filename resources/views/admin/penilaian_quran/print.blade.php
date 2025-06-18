@@ -1,165 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lapor Kepesantrenan</title>
+    <title>MRAPOR PROGRAM TAHFIDZUL QUR'AN</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Times New Roman', Times, serif;
             font-size: 12px;
+            margin: 5px;
         }
 
-        h1,
-        h3 {
+        .header {
             text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header img {
+            width: 100px;
+        }
+
+        .title {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         table {
-            width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            width: 100%;
+            margin-bottom: 15px;
         }
 
+        table,
         th,
         td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #eb960e;
-            color: white;
-        }
-
-        .info-table td {
-            border: none;
+            border: 1px solid #000;
             padding: 5px;
         }
 
-        .category {
-            font-weight: bold;
-            background-color: #f2f2f2;
+        .no-border {
+            border: none;
+            padding: 2px;
         }
 
-        .page-break {
-            page-break-after: always;
+        .section-title {
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+        }
+
+        .signature {
+            width: 30%;
+            text-align: center;
+            float: left;
+            margin-top: 40px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .small-text {
+            font-size: 10pt;
         }
     </style>
 </head>
 
 <body>
-    <!-- Informasi Santri -->
 
+    <div class="header">
+        <table class="no-border">
+            <tr class="no-border">
+                <td class="no-border" style="width: 15%; text-align: center;">
+                    <img src="{{ public_path('/img') }}/MTs-SPT.png" alt="Logo Pesantren">
+                </td>
+                <td class="no-border" style="width: 70%; text-align: center;">
+                    <div style="font-size: 14pt; font-weight: bold;">MADRASAH TSANAWIYAH</div>
+                    <div style="font-size: 14pt; font-weight: bold;">SANTRI PERBATASAN TIMUR</div>
+                    <div class="small-text">
+                        Alamat: Jl. Arafura – Gg. Santri, Kel. Samkai, Kec.<br> Merauke, Prov. Papua Selatan
+                        Telp: (0971)3336630
+                    </div>
+                </td>
+                <td class="no-border" style="width: 15%; text-align: center;">
+                    <img src="{{ public_path('/img') }}/logo-yayasan.png" alt="Logo Yayasan">
+                </td>
+            </tr>
+        </table>
+    </div>
 
-    @if ($data->isNotEmpty())
-        @foreach ($data->groupBy('id_santri') as $idSantri => $santriData)
-            <table class="info-table">
-                <tr>
-                    <td> <img src="{{ public_path('/img') }}/logo-pesantren.png" alt="Logo Kiri" class="logo"
-                            style="width: 80px;"></td>
-                    <td>
-                        <h1>Laporan Kepesantrenan</h1>
-                    </td>
-                    <td> <img src="{{ public_path('/img') }}/logo-yayasan.png" alt="Logo Kanan" class="logo"
-                            style="width: 100px;"></td>
-                </tr>
-            </table>
-            @php
-                $santri = $santriData->first()->santri ?? null;
-                $tahunAjaran = $santriData->first()->tahun_ajaran ?? null;
-            @endphp
+    <hr>
 
-            <!-- Informasi Santri -->
+    <div class="title">
+        RAPOR PROGRAM TAHFIDZUL QUR’AN <br> MADRASAH TSANAWIYAH SANTRI PERBATASAN TIMUR
+    </div>
 
-            <table class="info-table">
-                <tr>
-                    <td><strong>Nama</strong></td>
-                    <td>: {{ $santri->nama ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <td><strong>Kelas/Semester/TA</strong></td>
-                    <td>:
-                        {{ $santri->kelas ?? '-' }}/{{ $tahunAjaran->semester ?? '-' }}/{{ $tahunAjaran->tahun ?? '-' }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Kamar</strong></td>
-                    <td>: {{ $santri->kamar ?? '-' }}</td>
-                </tr>
-            </table>
+    <table style="border-collapse: collapse; width: 100%; border: 1px solid orange; font-size: 12px;">
+        <tr>
+            <td style="border: none;"><b>Nama Santri/ Santriyah</b></td>
+            <td style="border: none;">: {{ $data[0]->santri->nama }}</td>
+            <td style="border: none;"><b>Semester/ Tahun Ajar</b></td>
+            <td style="border: none;">: {{ $data[0]->tahun_ajaran->semester }} /
+                {{ $data[0]->tahun_ajaran->tahun }}</td>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: none;"><b>Kelas</b></td>
+            <td style="border: none;">: {{ $data[0]->santri->kelas }}</td>
+            <td style="border: none;"><b>Musyrif/ah Qur’an</b></td>
+            <td style="border: none;">:
+                {{ App\Models\PengasuhQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->pengasuh->nama }}
+            </td>
+        </tr>
+    </table>
 
-            <!-- Tabel Penilaian -->
-            @foreach ($santriData->groupBy('id_kategori') as $kategoriId => $kategoriData)
-                <table>
+    <div style="font-weight: bold; font-size: 14px; margin-bottom: 10px;">TINGKAT PENCAPAIAN</div>
+
+    <table style="border: none; border-collapse: collapse; width: 100%; font-weight: bold;">
+        <tr>
+            <td style="border: none; ">
+                <table style="border-collapse: collapse;  font-size: 12px; border: 1px solid black;">
                     <thead>
-                        <tr class="category">
-                            <th colspan="3">{{ $kategoriData->first()->kategori->kategori ?? '-' }}</th>
-                        </tr>
                         <tr>
-                            <th>No.</th>
-                            <th>Aspel Penilaian</th>
-                            <th>Nilai</th>
+                            <th style="border: 1px solid black; padding: 5px;">No</th>
+                            <th style="border: 1px solid black; padding: 5px;">Indikator Pencapaian</th>
+                            <th style="border: 1px solid black; padding: 5px;">Predikat</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kategoriData as $index => $penilaian)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $penilaian->point->point ?? '-' }}</td>
-                                <td>
-                                    @if ($penilaian->nilai == 1)
-                                        Belum Tampak
-                                    @elseif($penilaian->nilai == 2)
-                                        Berkembang
-                                    @elseif($penilaian->nilai == 3)
-                                        Mandiri
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
                         <tr>
-                            <td colspan="3">
-                                Komentar Tambahan : "
-                                <i>{{ App\Models\KomentarPenilaian::where('id_kategori', $kategoriId)->where('id_santri', $penilaian->id_santri)->where('id_tahun_ajaran', $penilaian->id_tahun_ajaran)->first()->komentar ?? '-' }}</i>
-                                "
+                            <td style="border: 1px solid black; padding: 5px;">1</td>
+                            <td style="border: 1px solid black; padding: 5px;">Kelancaran</td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->kelancaran }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black; padding: 5px;">2</td>
+                            <td style="border: 1px solid black; padding: 5px;">Makhraj</td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->makhraj }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black; padding: 5px;">3</td>
+                            <td style="border: 1px solid black; padding: 5px;">Tajwid</td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->tajwid }}
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            @endforeach
-            <!-- Tanda Tangan -->
-            <div style="margin-top: 60px; clear: both;">
-                <div style="width: 50%; float: left; text-align: center;">
-                    <p></p>
-                    <p style="margin-top: 80px;">
-                        <b>
-                            @php
-                                $pengasuh =
-                                    App\Models\PengasuhPenilaian::where('id_santri', $santri->id ?? 0)
-                                        ->where('id_tahun_ajaran', $tahunAjaran->id ?? 0)
-                                        ->first()->pengasuh->nama ?? '-';
-                            @endphp
-                            {{ $pengasuh }}
-                        </b><br>(Biro Pengasuhan)
-                    </p>
-                </div>
-                <div style="width: 50%; float: right; text-align: center;">
-                    <p>Merauke, {{ date('d F Y') }}<br>Mengetahui</p>
-                    <p style="margin-top: 60px;"><b>Buya M. Dic Hidayat Ratuloly, S.PdI, MPS.</b><br>(Pimpinan Pondok
-                        Pesantren)</p>
-                </div>
-            </div>
-            <div class="page-break"></div>
+                <table style="border-collapse: collapse;  font-size: 12px; border: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black; padding: 5px;">No</th>
+                            <th style="border: 1px solid black; padding: 5px;">Kriteria Sikap</th>
+                            <th style="border: 1px solid black; padding: 5px;">Predikat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid black; padding: 5px;">1</td>
+                            <td style="border: 1px solid black; padding: 5px;">Kegigihan</td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->kegigihan }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black; padding: 5px;">2</td>
+                            <td style="border: 1px solid black; padding: 5px;">Adab</td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->adab }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="border: none; vertical-align: top; text-align: left; font-weight: bold;">
+                Keterangan :
+                <p>84 - 90 : Jayyid Jiddan / Sangat Baik</p>
+                <p>79 - 83 : Jayyid / Baik</p>
+                <p>75 - 78 : Maqbul / Cukup</p>
+                <p>60 - 74 : Perlu Bimbingan</p>
+            </td>
+        </tr>
+    </table>
+
+    <table style="width: 90%">
+        @foreach ($data as $item)
+            <tr>
+                <td>
+                    <strong>{{ $item->kategori->kategori }}</strong>
+                    <p>{{ $item->komentar }}</p>
+                </td>
+            </tr>
         @endforeach
-    @else
-        <p>Data tidak tersedia untuk Santri dan Tahun Ajaran yang dipilih.</p>
-    @endif
+
+    </table>
+
+    <table style="border:none; width: 100%; margin-top: 30px; ">
+        <tr>
+            <td style="border:none; text-align: center; width: 25%;">
+                <br>Orangtua/Wali<br><br><br><br><br><br>
+                .........................
+            </td>
+            <td style="border:none;  text-align: center; width: 40%;">
+                <br>Koordinator Qur’an<br><br><br><br><br><br>
+                <u>Usth. Darma Herma Watik</u>
+            </td>
+            <td style="border:none;  width: 35%; ">
+                <span style="text-align: left;">Merauke,{{ date('d F Y') }}</span><br>
+                <span style="text-align: center;"> Kepala Sekolah</span><br><br><br><br><br><br>
+                <span style="text-align: center;"><u>Ust. T. Vianney Angwarmase, S.Kom.</u></span>
+            </td>
+        </tr>
+    </table>
 
 
 </body>

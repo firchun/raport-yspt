@@ -4,30 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitur Dalam Pengembangan</title>
+    <title>{{ $title }} | Santri Perbatasan Timur</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/logo-yayasan.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/logo-yayasan.png') }}" />
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
 
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md">
+    <!-- Logo -->
+    <div class="mb-6">
+        <img src="{{ asset('img/logo-yayasan.png') }}" alt="Logo" class="w-auto h-[100px]">
+    </div>
+
+    <!-- Card -->
+    @if (!$santri)
+        <div class="bg-red-500 p-8 rounded-2xl shadow-md text-center max-w-md">
             <div class="flex justify-center mb-4">
-                <svg class="w-24 h-24 text-yellow-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" stroke-width="1.5"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 9v3m0 4h.01M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z" />
                 </svg>
             </div>
-            <h1 class="text-2xl font-bold text-gray-700 mb-2">Fitur Sedang Dalam Pengembangan</h1>
-            <p class="text-gray-500 mb-6">Mohon bersabar, kami sedang bekerja keras untuk menyelesaikan fitur ini.
-                Silakan kembali lagi nanti.</p>
-            <a href="/"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full transition duration-300">
-                Kembali ke Beranda
-            </a>
+            <h1 class="text-2xl font-bold text-white mb-2">Data Santri Tidak Ditemukan</h1>
+            <p class="text-white mb-6">Harap melapor pada administrator jika data yang anda cari belum terdaftar
+                atau tidak ditemukan pada halaman ini.</p>
         </div>
-    </div>
+    @else
+        <div class="bg-white p-8 rounded-xl shadow-md text-center w-full max-w-lg lg:max-w-4xl">
+            <h3 class="text-xl font-semibold mb-4">Laporan Santri: {{ $santri->nama }}</h3>
+            <!-- Konten tambahan disini -->
+        </div>
+    @endif
 
 </body>
 

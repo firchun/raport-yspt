@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KomentarPenilaian;
+use App\Models\PencapaianQuran;
 use App\Models\PenilaianQuran;
 use App\Models\PenilaianSantri;
 use App\Models\TahunAjaran;
@@ -77,7 +78,7 @@ class TahunAjaranController extends Controller
                 $latestTahunAjaranId = TahunAjaran::max('id');
 
                 // Cek penilaian
-                $penilaian = PenilaianQuran::where('id_tahun_ajaran', $TahunAjaran->id)
+                $penilaian = PencapaianQuran::where('id_tahun_ajaran', $TahunAjaran->id)
                     ->where('id_santri', $id_santri)
                     ->count();
 

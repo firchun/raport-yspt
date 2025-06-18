@@ -9,10 +9,8 @@
     @stack('css')
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('backend_theme') }}/vendors/images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ asset('backend_theme') }}/vendors/images/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ asset('backend_theme') }}/vendors/images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/logo-yayasan.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/logo-yayasan.png') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Mobile Specific Metas -->
