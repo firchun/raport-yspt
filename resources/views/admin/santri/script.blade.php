@@ -1,4 +1,10 @@
 @push('js')
+    <!-- JS DataTables Buttons -->
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script>
         $(function() {
             $('#datatable-customers').DataTable({
@@ -18,7 +24,11 @@
 
                     {
                         data: 'nama',
-                        name: 'nama'
+                        name: 'nama',
+                        render: function(data, type, row, meta) {
+                            return '<strong>' + row.nama + '</strong><br><small>' + row.alamat +
+                                '</small>';
+                        }
                     },
                     {
                         data: 'kamar',
@@ -29,13 +39,47 @@
                         name: 'kelas'
                     },
                     {
-                        data: 'alamat',
-                        name: 'alamat'
+                        data: 'status_sekolah',
+                        name: 'status_sekolah',
+                        render: function(data, type, row, meta) {
+                            return '<span class="badge badge-primary">' + row.status_sekolah +
+                                '</span>';
+
+                        },
                     },
 
                     {
                         data: 'action',
                         name: 'action'
+                    }
+                ],
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'pdf',
+                        text: '<i class="bi bi-file-pdf"></i> PDF',
+                        className: 'btn-danger mx-3',
+                        orientation: 'landscape',
+                        title: '{{ $title . date('d-m-y H:i:s') }}',
+                        pageSize: 'A4',
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        },
+                        customize: function(doc) {
+                            doc.defaultStyle.fontSize = 8;
+                            doc.styles.tableHeader.fontSize = 8;
+                            doc.styles.tableHeader.fillColor = '#2a6908';
+                        },
+                        header: true,
+
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="bi bi-file-excel"></i> Excel',
+                        title: '{{ $title . date('d-m-y H:i:s') }}',
+                        className: 'btn-success',
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        }
                     }
                 ]
             });
@@ -55,6 +99,8 @@
                         $('#formCustomerAlamat').val(response.alamat);
                         $('#formCustomerKamar').val(response.kamar);
                         $('#formCustomerKelas').val(response.kelas);
+                        // Update tombol Data Lengkap
+                        $('#btnDataLengkap').attr('href', '/santri/edit-view/' + response.id);
                         $('#customersModal').modal('show');
                     },
                     error: function(xhr) {

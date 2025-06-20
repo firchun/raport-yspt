@@ -34,7 +34,7 @@
                             <th>Nama</th>
                             <th>Kamar</th>
                             <th>Kelas</th>
-                            <th>Alamat</th>
+                            <th>Sekolah</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -45,7 +45,7 @@
                             <th>Nama</th>
                             <th>Kamar</th>
                             <th>Kelas</th>
-                            <th>Alamat</th>
+                            <th>Sekolah</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>

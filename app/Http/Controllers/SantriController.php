@@ -16,6 +16,22 @@ class SantriController extends Controller
         ];
         return view('admin.santri.index', $data);
     }
+    public function create()
+    {
+        $data = [
+            'title' => 'Tambah Santri',
+        ];
+        return view('admin.santri.create', $data);
+    }
+    public function editView($id)
+    {
+        $santri = Santri::find($id);
+        $data = [
+            'title' => 'Edit Santri : ' . $santri->nama,
+            'santri' => $santri,
+        ];
+        return view('admin.santri.edit', $data);
+    }
     public function getSantriDataTable()
     {
 
@@ -33,7 +49,7 @@ class SantriController extends Controller
             })
             ->addColumn('qr_code', function ($Santri) {
                 $url = url('/santri/' . $Santri->code);
-                return \QrCode::format('svg')->size(100)->generate($url) . '<br><a href="' . url('/santri', $Santri->code) . '" target="__blank" class="text-link">' . $Santri->code . '</a>';
+                return \QrCode::format('svg')->size(100)->generate($url) . '<br><a href="' . url('/raport-santri', $Santri->code) . '" target="__blank" class="text-link">' . $Santri->code . '</a>';
             })
 
             ->rawColumns(['action', 'action_nilai', 'qr_code'])
@@ -43,16 +59,59 @@ class SantriController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'kamar' => 'required|string',
-            'kelas' => 'required|string',
+            'alamat' => 'nullable|string',
+            'kamar' => 'nullable|string',
+            'kelas' => 'nullable|string',
+            // tambahan
+            'tempat_lahir' => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|string',
+            'hobi' => 'nullable|string',
+            'cita_cita' => 'nullable|string',
+            'golongan_darah' => 'nullable|string',
+            'status_rumah' => 'nullable|string',
+            'alamat_rumah' => 'nullable|string',
+            'no_kk' => 'nullable|string',
+            'nik_siswa' => 'nullable|string',
+            'nisn' => 'nullable|string',
+            'no_induk' => 'nullable|string',
+            'nama_ayah' => 'nullable|string',
+            'pekerjaan_ayah' => 'nullable|string',
+            'pendidikan_ayah' => 'nullable|string',
+            'no_hp_ayah' => 'nullable|string',
+            'nama_ibu' => 'nullable|string',
+            'pekerjaan_ibu' => 'nullable|string',
+            'pendidikan_ibu' => 'nullable|string',
+            'no_hp_ibu' => 'nullable|string',
         ]);
 
         $SantriData = [
             'nama' => $request->input('nama'),
-            'alamat' => $request->input('alamat'),
+            'alamat' => $request->input('alamat') ?? $request->input('alamat_rumah'),
             'kamar' => $request->input('kamar'),
             'kelas' => $request->input('kelas'),
+            //tambahan
+            'tempat_lahir' => $request->input('tempat_lahir'),
+            'tanggal_lahir' => $request->input('tanggal_lahir'),
+            'jenis_kelamin' => $request->input('jenis_kelamin'),
+            'hobi' => $request->input('hobi'),
+            'cita_cita' => $request->input('cita_cita'),
+            'golongan_darah' => $request->input('golongan_darah'),
+            'status_rumah' => $request->input('status_rumah'),
+            'alamat_rumah' => $request->input('alamat_rumah'),
+            'no_kk' => $request->input('no_kk'),
+            'nik_siswa' => $request->input('nik_siswa'),
+            'nisn' => $request->input('nisn'),
+            'no_induk' => $request->input('no_induk'),
+            'nama_ayah' => $request->input('nama_ayah'),
+            'pekerjaan_ayah' => $request->input('pekerjaan_ayah'),
+            'pendidikan_ayah' => $request->input('pendidikan_ayah'),
+            'no_hp_ayah' => $request->input('no_hp_ayah'),
+            'nama_ibu' => $request->input('nama_ibu'),
+            'pekerjaan_ibu' => $request->input('pekerjaan_ibu'),
+            'pendidikan_ibu' => $request->input('pendidikan_ibu'),
+            'no_hp_ibu' => $request->input('no_hp_ibu'),
+
         ];
 
         if ($request->filled('id')) {

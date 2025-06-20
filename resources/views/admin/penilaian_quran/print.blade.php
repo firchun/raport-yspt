@@ -131,21 +131,21 @@
                         <tr>
                             <td style="border: 1px solid black; padding: 5px;">1</td>
                             <td style="border: 1px solid black; padding: 5px;">Kelancaran</td>
-                            <td style="border: 1px solid black; padding: 5px;">
+                            <td style="border: 1px solid black; padding: 5px;text-align: center;">
                                 {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->kelancaran }}
                             </td>
                         </tr>
                         <tr>
                             <td style="border: 1px solid black; padding: 5px;">2</td>
                             <td style="border: 1px solid black; padding: 5px;">Makhraj</td>
-                            <td style="border: 1px solid black; padding: 5px;">
+                            <td style="border: 1px solid black; padding: 5px;text-align: center;">
                                 {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->makhraj }}
                             </td>
                         </tr>
                         <tr>
                             <td style="border: 1px solid black; padding: 5px;">3</td>
                             <td style="border: 1px solid black; padding: 5px;">Tajwid</td>
-                            <td style="border: 1px solid black; padding: 5px;">
+                            <td style="border: 1px solid black; padding: 5px;text-align: center;">
                                 {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->tajwid }}
                             </td>
                         </tr>
@@ -163,14 +163,14 @@
                         <tr>
                             <td style="border: 1px solid black; padding: 5px;">1</td>
                             <td style="border: 1px solid black; padding: 5px;">Kegigihan</td>
-                            <td style="border: 1px solid black; padding: 5px;">
+                            <td style="border: 1px solid black; padding: 5px;text-align: center;">
                                 {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->kegigihan }}
                             </td>
                         </tr>
                         <tr>
                             <td style="border: 1px solid black; padding: 5px;">2</td>
                             <td style="border: 1px solid black; padding: 5px;">Adab</td>
-                            <td style="border: 1px solid black; padding: 5px;">
+                            <td style="border: 1px solid black; padding: 5px;text-align: center;">
                                 {{ App\Models\PencapaianQuran::where('id_santri', $data[0]->id_santri)->where('id_tahun_ajaran', $data[0]->id_tahun_ajaran)->latest()->first()->adab }}
                             </td>
                         </tr>
@@ -207,12 +207,15 @@
             </td>
             <td style="border:none;  text-align: center; width: 40%;">
                 <br>Koordinator Qur’an<br><br><br><br><br><br>
-                <u>Usth. Darma Herma Watik</u>
+                <u>Usth. Darma Herma Watik</u><br>
+                NIPY.1999082320210720007
             </td>
             <td style="border:none;  width: 35%; ">
                 <span style="text-align: left;">Merauke,{{ date('d F Y') }}</span><br>
                 <span style="text-align: center;"> Kepala Sekolah</span><br><br><br><br><br><br>
-                <span style="text-align: center;"><u>Ust. T. Vianney Angwarmase, S.Kom.</u></span>
+                <span style="text-align: center;"><u>Ust. T. Vianney Angwarmase, S.Kom.</u><br>
+                    NIPY. 1998030220210710006</span>
+                </span>
             </td>
         </tr>
     </table>

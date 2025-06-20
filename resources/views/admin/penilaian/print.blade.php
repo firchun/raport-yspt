@@ -102,7 +102,7 @@
                         </tr>
                         <tr>
                             <th style="width: 10px;">No.</th>
-                            <th>Aspel Penilaian</th>
+                            <th>Aspek Penilaian</th>
                             <th style="width: 50px;">Nilai</th>
                         </tr>
                     </thead>

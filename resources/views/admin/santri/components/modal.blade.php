@@ -28,6 +28,9 @@
                         <label for="formCustomerAddress" class="form-label">Alamat</label>
                         <input type="text" class="form-control" id="formCustomerAlamat" name="alamat" required>
                     </div>
+                    <div class="mb-3">
+                        <a href="" class="btn btn-primary" id="btnDataLengkap">Data Lengkap</a>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -64,6 +67,11 @@
                     <div class="mb-3">
                         <label for="formCustomerAddress" class="form-label">Alamat</label>
                         <input type="text" class="form-control" id="formCustomerAlamat" name="alamat" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <a href="{{ route('santri.create') }}" class="btn btn-primary" id="formCustomerAccount">Data
+                            Lengkap</a>
                     </div>
                 </form>
             </div>

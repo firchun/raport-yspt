@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/santri/{code}', function ($code) {
+Route::get('/raport-santri/{code}', function ($code) {
     $santri = Santri::where('code', $code)->first();
     $data = [
         'title' => $santri ? 'Laporan Santri  : ' . $santri->nama : 'Data Tidak Ditemukan',
@@ -49,8 +49,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     //santri managemen
     Route::get('/santri', [SantriController::class, 'index'])->name('santri');
+    Route::get('/santri/create', [SantriController::class, 'create'])->name('santri.create');
     Route::post('/santri/store',  [SantriController::class, 'store'])->name('santri.store');
     Route::get('/santri/edit/{id}',  [SantriController::class, 'edit'])->name('santri.edit');
+    Route::get('/santri/edit-view/{id}',  [SantriController::class, 'editView'])->name('santri.edit-view');
     Route::delete('/santri/delete/{id}',  [SantriController::class, 'destroy'])->name('santri.delete');
     Route::get('/santri-datatable', [SantriController::class, 'getSantriDataTable']);
     //tahun ajaran managemen
